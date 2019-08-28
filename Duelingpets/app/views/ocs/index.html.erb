@@ -1,0 +1,44 @@
+<% if optional %>
+   <% provide(:h1, @user.vname +  "'s ocs") %>
+<% else %>
+   <% provide(:h1, "OC List") %>
+<% end %>
+<% if @ocs.count > 10 %>
+   <div class="formlinks"><%= paginate @ocs %></div>
+   <br>
+<% end %>
+<% @ocs.each do |oc| %>
+   <div class="pageformat">
+      <p class="formlinks"><%= link_to oc.name, user_oc_path(oc.user, oc) %></p>
+      <p>Created on: <%= oc.created_on.strftime("%B-%d-%Y") %> (<%= distance_of_time_in_words_to_now oc.created_on %> ago)</p>
+      <% if !oc.reviewed_on.nil? %>
+         <p>Reviewed on: <%= oc.reviewed_on.strftime("%B-%d-%Y") %> (<%= distance_of_time_in_words_to_now oc.reviewed_on %> ago)</p>
+      <% end %>
+      <p>Updated on: <%= oc.updated_on.strftime("%B-%d-%Y") %> (<%= distance_of_time_in_words_to_now oc.updated_on %> ago)</p>
+      <% if !optional %>
+         <br>
+         <% if oc.user.userinfo.miniavatar.to_s != "" %>
+            <p><%= image_tag(oc.user.userinfo.miniavatar_url(:thumb)) %></p>
+         <% end %>
+         <p class="formlinks">Owner: <%= getUserPrivilege(oc.user) %><%= link_to oc.user.vname, user_path(oc.user) %></p>
+         <p>Group: <%= oc.bookgroup.name %></p>
+         <p>Status: <%= getActivity(oc.user) %>
+            <% if getActivity(oc.user) != "Online" && getActivity(oc.user) != "Inoperable" %>
+               for <%= distance_of_time_in_words_to_now getTime(oc.user) %>
+            <% end %>
+         </p>
+         <br>
+      <% else %>
+         <br>
+         <p>Group: <%= oc.bookgroup.name %></p>
+         <br>
+      <% end %>
+      <p><%= textFormater("Multi", oc.description, "All").html_safe %></p>
+   </div>
+   <br>
+<% end %>
+<% if optional %>
+   <p class="formlinks"><%= link_to 'Back', user_path(@user) %></p>
+<% else %>
+   <p class="formlinks"><%= link_to 'Back', root_path %></p>
+<% end %>

@@ -1,0 +1,41 @@
+<% if @type == "Blog" %>
+   <%= @content.user.vname %>'s new blog <%= @content.title %> is awaiting your review!
+<% end %>
+===============================================
+ 
+<% if @type == "Blog" %>
+   Greeting my review team we have a blogger by the name
+   of <%= @content.user.vname %> who is building some
+   new blogs to help advertise his content on this site.
+   So I gathered you all together to have a look at his
+   newest submission to see if it fits within our
+   guidlines. This blog might contain some artwork ads
+   and as such I like you to look them over in addition
+   to the traditional text based content that blogs
+   normally contain. Be sure to check to see if this
+   content does indeed fit the book group that it has
+   been assigned to. Please give this content an in
+   depth check as we want to ensure this community stays
+   safe for everyone.
+<% end %>
+
+<% if @type == "Blog" %>
+   Now I am sure all of you are itching to get started
+   so I setup a useful url <%= @url %> for you to use.
+   However if you are having trouble finding this url,
+   well I created a special panel for you guys to use
+   when it comes to reviewing content. This special
+   panel should only be used when you need it and
+   turned off when you don't. Its very important that
+   you keep this special knowledge under lock and key
+   as we don't want this tool to be abused for evil
+   means. Now if you approve the blog then the user
+   gets points or has them removed from their account.
+   If you deny the content please get in touch with
+   the user and let him know why and how to go about
+   fixing it if it doesn't fit our guidelines. I
+   leave that ruling up to you.
+<% end %>
+ 
+
+From Bolt Greywing the Admin

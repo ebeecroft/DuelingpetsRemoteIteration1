@@ -1,0 +1,180 @@
+<%= form_with(model: [@user, @colorscheme], local: true) do |form| %>
+  <% if @colorscheme.errors.any? %>
+    <div id="errorexplan">
+      <h2 id="errorheader"><%= pluralize(@colorscheme.errors.count, "error") %> prohibited this colorscheme from being saved:</h2>
+
+      <ul>
+      <% @colorscheme.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="formformat">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  <div class="formformat">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+  <div class="formformat">
+    <%= form.label :activated %>
+    <%= form.check_box :activated %>
+  </div>
+  <div class="formformat">
+    <%= form.label :backgroundcolor %>
+    <%= form.text_field :backgroundcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :headercolor %>
+    <%= form.text_field :headercolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :textcolor %>
+    <%= form.text_field :textcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :defaultbuttoncolor %>
+    <%= form.text_field :defaultbuttoncolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :defaultbuttonbackgcolor %>
+    <%= form.text_field :defaultbuttonbackgcolor %>
+  </div>
+  <!---Approve and deny buttons are not useful for normal users--->
+  <div class="formformat">
+    <%= form.label :approvebuttoncolor %>
+    <%= form.text_field :approvebuttoncolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :approvebuttonbackgcolor %>
+    <%= form.text_field :approvebuttonbackgcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :denybuttoncolor %>
+    <%= form.text_field :denybuttoncolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :denybuttonbackgcolor %>
+    <%= form.text_field :denybuttonbackgcolor %>
+  </div>
+  <!--End of Approve and deny section-->
+  <div class="formformat">
+    <%= form.label :editbuttoncolor %>
+    <%= form.text_field :editbuttoncolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :editbuttonbackgcolor %>
+    <%= form.text_field :editbuttonbackgcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :destroybuttoncolor %>
+    <%= form.text_field :destroybuttoncolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :destroybuttonbackgcolor %>
+    <%= form.text_field :destroybuttonbackgcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :submitbuttoncolor %>
+    <%= form.text_field :submitbuttoncolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :submitbuttonbackgcolor %>
+    <%= form.text_field :submitbuttonbackgcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :navigationcolor %>
+    <%= form.text_field :navigationcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :navigationlinkcolor %>
+    <%= form.text_field :navigationlinkcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :navigationhovercolor %>
+    <%= form.text_field :navigationhovercolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :navigationhoverbackgcolor %>
+    <%= form.text_field :navigationhoverbackgcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :onlinestatuscolor %>
+    <%= form.text_field :onlinestatuscolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :profilecolor %>
+    <%= form.text_field :profilecolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :profilevisitedcolor %>
+    <%= form.text_field :profilevisitedcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :profilehovercolor %>
+    <%= form.text_field :profilehovercolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :profilehoverbackgcolor %>
+    <%= form.text_field :profilehoverbackgcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :sessioncolor %>
+    <%= form.text_field :sessioncolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :navlinkcolor %>
+    <%= form.text_field :navlinkcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :navlinkhovercolor %>
+    <%= form.text_field :navlinkhovercolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :navlinkhoverbackgcolor %>
+    <%= form.text_field :navlinkhoverbackgcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :explanationborder %>
+    <%= form.text_field :explanationborder %>
+  </div>
+  <div class="formformat">
+    <%= form.label :explanationbackgcolor %>
+    <%= form.text_field :explanationbackgcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :explanheadercolor %>
+    <%= form.text_field :explanheadercolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :explanheaderbackgcolor %>
+    <%= form.text_field :explanheaderbackgcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :errorfieldcolor %>
+    <%= form.text_field :errorfieldcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :errorcolor %>
+    <%= form.text_field :errorcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :warningcolor %>
+    <%= form.text_field :warningcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :notificationcolor %>
+    <%= form.text_field :notificationcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.label :successcolor %>
+    <%= form.text_field :successcolor %>
+  </div>
+  <div class="formformat">
+    <%= form.submit %>
+  </div>
+  <br>
+  <p class="formlinks"><%= link_to 'Usercolors', user_colorschemes_path %>|<%= link_to 'ColorSchemes', colorschemes_path %></p>
+<% end %>

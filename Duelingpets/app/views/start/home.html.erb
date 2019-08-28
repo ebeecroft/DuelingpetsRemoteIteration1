@@ -1,0 +1,24 @@
+<%# provide(:h1, "Welcome to Duelingpets #{homepageAlerts}") %>
+<%# if current_user %>
+   <p class="centerpagecontent"><%#= playMainMusic %></p>
+   <div class="pageformat">
+      <%# if checkMusicFlag == "On" %>
+         <p><%#= button_to 'Unmute music', muteAudio_path, method: :post, class: "button submitbutton" %></p>
+      <%# else %>
+         <p><%#= button_to 'Mute music', muteAudio_path, method: :post, class: "button submitbutton" %></p>
+      <%# end %>
+   </div>
+<%# end %>
+<br>
+<p class="centerpagecontent"><%#= image_tag(displayType("Mascot")) %></p>
+<div class="pageformat">
+   <p>Greetings welcome to Duelingpets, we are currently working
+      on building some new features. So some of these new ones
+      might be a bit buggy.
+   </p>
+   <p>Audio Test</p>
+   <!--By default we are starting in the public folder--->
+   <!--We need to append front slash before resources to make it work-->
+   <p><%= audio_tag("/Resources/Music/homepage/Theme.mp3", :controls => true) %></p>
+   <p><%#= video_tag("/Resources/Video/tmnt/Alien-Invaders.mp4", :controls => true) %></p>
+</div>

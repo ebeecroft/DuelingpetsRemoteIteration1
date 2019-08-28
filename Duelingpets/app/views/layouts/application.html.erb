@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Duelingpets</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= image_tag("/Resources/Images/webcontrol/banner/duelingpetsbanner.jpeg") %>
+    <nav>login/Registration</nav>
+    <div>Status section</div>
+    <!--img tag here-->
+    <p>test</p>
+    <%= yield %>
+  </body>
+</html>

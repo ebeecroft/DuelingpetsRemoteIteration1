@@ -1,0 +1,27 @@
+<% provide(:h1, "Userupgrade List") %>
+<% if @userupgrades.count > 10 %>
+   <div class="formlinks"><%= paginate @userupgrades %></div>
+   <br>
+<% end %>
+<% @userupgrades.each do |userupgrade| %>
+   <div class="pageformat"><div class="container">Pouch base: <%= userupgrade.pouchbase %></div> <div class="container"><%= button_to 'Edit', edit_userupgrade_path(userupgrade), method: :get, class: "button editbutton" %></div></div>
+   <div class="pageformat">
+      <p>Pouch inc: <%= userupgrade.pouchinc %></p>
+      <p>Pouch cost: <%= userupgrade.pouchcost %></p>
+      <p>Pouch max: <%= userupgrade.pouchmax %></p>
+      <p>Emerald base: <%= userupgrade.emeraldbase %></p>
+      <p>Emerald inc: <%= userupgrade.emeraldinc %></p>
+      <p>Emerald cost: <%= userupgrade.emeraldcost %></p>
+      <p>Emerald max: <%= userupgrade.emeraldmax %></p>
+      <p>Blog base: <%= userupgrade.blogbase %></p>
+      <p>Blog inc: <%= userupgrade.bloginc %></p>
+      <p>Blog cost: <%= userupgrade.blogcost %></p>
+      <p>Blog max: <%= userupgrade.blogmax %></p>
+      <p>Dreyterrium base: <%= userupgrade.dreyterriumbase %></p>
+      <p>Dreyterrium inc: <%= userupgrade.dreyterriuminc %></p>
+      <p>Dreyterrium cost: <%= userupgrade.dreyterriumcost %></p>
+      <p>Dreyterrium max: <%= userupgrade.dreyterriummax %></p>
+   </div>
+   <br>
+<% end %>
+<p class="formlinks"><%= link_to 'Back', root_path %></p>

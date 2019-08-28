@@ -1,0 +1,82 @@
+<%= form_with(model: @userupgrade, local: true) do |form| %>
+  <% if @userupgrade.errors.any? %>
+    <div id="errorexplan">
+      <h2 id="errorheader"><%= pluralize(@userupgrade.errors.count, "error") %> prohibited this userupgrade from being saved:</h2>
+
+      <ul>
+      <% @userupgrade.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="pageformat">
+    <%= form.label :pouchbase %>
+    <%= form.number_field :pouchbase %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :pouchinc %>
+    <%= form.number_field :pouchinc %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :pouchcost %>
+    <%= form.number_field :pouchcost %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :pouchmax %>
+    <%= form.number_field :pouchmax %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :emeraldbase %>
+    <%= form.number_field :emeraldbase %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :emeraldinc %>
+    <%= form.number_field :emeraldinc %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :emeraldcost %>
+    <%= form.number_field :emeraldcost %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :emeraldmax %>
+    <%= form.number_field :emeraldmax %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :blogbase %>
+    <%= form.number_field :blogbase %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :bloginc %>
+    <%= form.number_field :bloginc %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :blogcost %>
+    <%= form.number_field :blogcost %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :blogmax %>
+    <%= form.number_field :blogmax %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :dreyterriumbase %>
+    <%= form.number_field :dreyterriumbase %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :dreyterriuminc %>
+    <%= form.number_field :dreyterriuminc %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :dreyterriumcost %>
+    <%= form.number_field :dreyterriumcost %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :dreyterriummax %>
+    <%= form.number_field :dreyterriummax %>
+  </div>
+  <div class="pageformat">
+    <%= form.submit %>
+  </div>
+  <br>
+  <p class="formlinks"><%= link_to 'Back', userupgrades_path %></p>
+<% end %>
