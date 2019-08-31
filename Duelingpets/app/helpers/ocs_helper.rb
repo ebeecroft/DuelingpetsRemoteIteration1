@@ -1,4 +1,4 @@
-module BlogsHelper
+module OcsHelper
 
    private
       def getOcParams(type)

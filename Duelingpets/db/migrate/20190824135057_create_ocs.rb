@@ -22,10 +22,12 @@ class CreateOcs < ActiveRecord::Migration[5.2]
       t.string :image
       t.string :ogg
       t.string :mp3
+      t.string :voiceogg
+      t.string :voicemp3
       t.datetime :created_on
       t.datetime :updated_on
       t.datetime :reviewed_on
-      t.boolean :reviewed
+      t.boolean :reviewed, default: false
       t.integer :user_id
       t.integer :bookgroup_id
 

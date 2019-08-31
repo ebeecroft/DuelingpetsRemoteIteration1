@@ -22,18 +22,18 @@ class CreateBlogs < ActiveRecord::Migration[5.2]
       t.integer :bookgroup_id
       t.integer :blogviewer_id
       t.integer :user_id
-      t.boolean :largeimage1purchased
-      t.boolean :largeimage2purchased
-      t.boolean :largeimage3purchased
-      t.boolean :smallimage1purchased
-      t.boolean :smallimage2purchased
-      t.boolean :smallimage3purchased
-      t.boolean :smallimage4purchased
-      t.boolean :smallimage5purchased
-      t.boolean :musicpurchased
-      t.boolean :adbannerpurchased
-      t.boolean :pointsreceived
-      t.boolean :reviewed
+      t.boolean :largeimage1purchased, default: false
+      t.boolean :largeimage2purchased, default: false
+      t.boolean :largeimage3purchased, default: false
+      t.boolean :smallimage1purchased, default: false
+      t.boolean :smallimage2purchased, default: false
+      t.boolean :smallimage3purchased, default: false
+      t.boolean :smallimage4purchased, default: false
+      t.boolean :smallimage5purchased, default: false
+      t.boolean :musicpurchased, default: false
+      t.boolean :adbannerpurchased, default: false
+      t.boolean :pointsreceived, default: false
+      t.boolean :reviewed, default: false
 
       t.timestamps
     end

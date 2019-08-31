@@ -7,7 +7,7 @@ module UserupgradesHelper
             value = params[:id]
          elsif(type == "Upgrade")
             value = params.require(:userupgrade).permit(:pouchbase, :pouchinc, :pouchcost, :pouchmax,
-            :emeraldbase, :emeraldinc, :emeraldcost, :emeraldmax, :blogbase, :bloginc, :blogcost, :blogmax
+            :emeraldbase, :emeraldinc, :emeraldcost, :emeraldmax, :blogbase, :bloginc, :blogcost, :blogmax,
             :dreyterriumbase, :dreyterriuminc, :dreyterriumcost, :dreyterriummax)
          elsif(type == "Page")
             value = params[:page]

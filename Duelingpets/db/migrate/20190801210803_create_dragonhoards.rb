@@ -6,18 +6,18 @@ class CreateDragonhoards < ActiveRecord::Migration[5.2]
       t.datetime :created_on
       t.string :ogg
       t.string :mp3
-      t.float :taxbase
-      t.float :taxinc
+      t.float :taxbase, limit: 53
+      t.float :taxinc, limit: 53
       t.integer :colorschemepoints
       t.integer :colorschemecleanup
-      t.integer :treasury
-      t.integer :contestpoints
+      t.integer :treasury, default: 0
+      t.integer :contestpoints, default: 0
       t.integer :conversioncost
       t.integer :emeraldvalue
-      t.float :emeraldrate
+      t.float :emeraldrate, limit: 53
       t.integer :pointscreated
-      t.integer :profit
-      t.boolean :denholiday
+      t.integer :profit, default: 0
+      t.boolean :denholiday, default: false
       t.string :dragonimage
       t.integer :blogadbannercost
       t.integer :bloglargeimagecost
@@ -26,7 +26,7 @@ class CreateDragonhoards < ActiveRecord::Migration[5.2]
       t.integer :blogpoints
       t.integer :dreyterrium_start
       t.integer :newdreyterriumcapacity
-      t.integer :dreyterrium_extracted
+      t.integer :dreyterrium_extracted, default: 0
       t.integer :dreyterriumchange
       t.integer :dreyterriumbasepoints
       t.integer :dreyterriumcurrent_value
