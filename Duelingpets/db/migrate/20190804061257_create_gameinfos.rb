@@ -7,8 +7,8 @@ class CreateGameinfos < ActiveRecord::Migration[5.2]
       t.datetime :activated_on
       t.boolean :startgame, default: false
       t.boolean :gamecompleted, default: false
-      t.integer :success
-      t.integer :failure
+      t.integer :success, default: 0
+      t.integer :failure, default: 0
       t.integer :user_id
 
       t.timestamps
