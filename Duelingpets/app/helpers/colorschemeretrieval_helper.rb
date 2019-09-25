@@ -4,7 +4,7 @@ module ColorschemeretrievalHelper
       def getColorAttribute(attribute)
          value = ""
          if(current_user)
-            usercolor = Colorscheme.find_by_id(current_user.userinfo.colorscheme_id)
+            usercolor = Colorscheme.find_by_id(current_user.userinfo.daycolor_id)
             if(attribute == "Backgroundcolor")
                value = usercolor.backgroundcolor
             elsif(attribute == "Header")

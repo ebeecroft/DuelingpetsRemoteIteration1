@@ -26,6 +26,10 @@ class StartController < ApplicationController
       mode "muteAudio"
    end
 
+   def hubworld
+      mode "hubworld"
+   end
+
    def admincontrols
       mode "admincontrols"
    end

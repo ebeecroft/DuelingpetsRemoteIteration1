@@ -19,6 +19,8 @@ class CreateWebcontrols < ActiveRecord::Migration[5.2]
       t.string :creationmp3
       t.string :maintenanceogg
       t.string :maintenancemp3
+      t.string :missingpageogg
+      t.string :missingpagemp3
       t.boolean :gate_open, default: false
 
       t.timestamps

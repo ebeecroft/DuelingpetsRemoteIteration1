@@ -17,6 +17,7 @@ class CommunityMailer < ApplicationMailer
          email = content.blog.user.email
          message = "Your blog #{content.blog.title} was starred by #{content.user.vname}. [Duelingpets]"
       end
+      @type = type
       @content = content
       @points = points
       mail(to: email, from: websiteMail, subject: message)
@@ -35,6 +36,7 @@ class CommunityMailer < ApplicationMailer
          email = content.movie.user.email
          message = "Your movie #{content.movie.title} was favorited by #{content.user.vname}. [Duelingpets]"
       end
+      @type = type
       @content = content
       @points = points
       mail(to: email, from: websiteMail, subject: message)
@@ -54,6 +56,7 @@ class CommunityMailer < ApplicationMailer
       elsif(type == "Movie")
          message = "#{content.user.vname} created a new movie. [Duelingpets]"
       end
+      @type = type
       @content = content
       @watch = watch
       mail(to: email, from: websiteMail, subject: message)
@@ -75,6 +78,7 @@ class CommunityMailer < ApplicationMailer
          email = content.blog.user.email
          message = "Your blog #{content.blog.title} was replied to by #{content.user.vname}. [Duelingpets]"
       end
+      @type = type
       @content = content
       @points = points
       mail(to: email, from: websiteMail, subject: message)
@@ -93,6 +97,7 @@ class CommunityMailer < ApplicationMailer
          email = request.from_user.email
          message = "Your friendrequest with #{request.to_user.vname} was denied:[Duelingpets]"
       end
+      @type = type
       @request = request
       mail(to: email, from: websiteMail, subject: message)
    end
@@ -111,6 +116,7 @@ class CommunityMailer < ApplicationMailer
          end
          message = "#{content.user.vname} sent you a new PMReply. [Duelingpets]"
       end
+      @type = type
       @content = content
       @url = url
       mail(to: email, from: websiteMail, subject: message)

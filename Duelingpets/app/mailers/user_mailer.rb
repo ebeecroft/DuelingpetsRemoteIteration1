@@ -5,7 +5,7 @@ class UserMailer < ApplicationMailer
       email = user.email
       message = ""
       if(type == "Welcome")
-         message = "Welcome #{@user.vname}:[Duelingpets]"
+         message = "Welcome #{user.vname}:[Duelingpets]"
       elsif(type == "Resettime")
          message = "Reset time:[Duelingpets]"
       elsif(type == "Resetpassword")
@@ -14,6 +14,7 @@ class UserMailer < ApplicationMailer
          message = "Account info:[Duelingpets]"
       end
       @user = user
+      @type = type
       mail(to: email, from: websiteMail, subject: message)
    end
 
@@ -45,6 +46,7 @@ class UserMailer < ApplicationMailer
       end
       @content = content
       @url = url
+      @type = type
       if(type == "Bot")
          mail(to: email, from: websiteMail, subject: message)
       elsif(type == "Review")

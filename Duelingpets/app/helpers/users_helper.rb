@@ -38,7 +38,7 @@ module UsersHelper
       def user_params
          params.require(:user).permit(:firstname, :lastname, :email, :country, 
          :country_timezone, :military_time, :birthday, :login_id, :vname,
-         :password, :password_confirmation)
+         :password, :password_confirmation, :accounttype_id, :shared)
       end
 
       def musicCommons(type)

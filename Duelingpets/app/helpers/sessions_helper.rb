@@ -10,7 +10,7 @@ module SessionsHelper
          #Emails the user the new activation token
          @pouch = pouch
          @pouch.save
-         UserMailer.user_info(@pouch.user, "Resettime").deliver_later(wait: 5.minutes)
+         UserMailer.user_info(@pouch.user, "Resettime").deliver_now
          flash[:success] = "Your time limit was extended and you received a new activation token."
          redirect_to activate_path
       end
@@ -36,7 +36,7 @@ module SessionsHelper
          #Sends the user an email with their new password
          @user = loginUser
          @user.save
-         UserMailer.user_info(@user, "Resetpassword").deliver_later(wait: 5.minutes)
+         UserMailer.user_info(@user, "Resetpassword").deliver_now
          flash[:success] = "Your password was succesfully sent"
          redirect_to root_path
       end
@@ -101,7 +101,7 @@ module SessionsHelper
       end
 
       def recoverpage(type, pagemode)
-         if(type == "recoverypost")
+         if(type == "recoverpost")
             loginUser = User.find_by_login_id(params[:session][:login_id].downcase)
             vnameUser = User.find_by_vname(params[:session][:vname].downcase)
             if(loginUser && vnameUser && loginUser.pouch.activated && loginUser.id == vnameUser.id)

@@ -159,7 +159,7 @@ module StartHelper
             logoutExpiredUsers
             redirect_to root_path
          else
-            if(type == "home" || type == "aboutus")
+            if(type == "home" || type == "aboutus" || type == "hubworld")
                #Initially empty
                removeTransactions
             elsif(type == "contact" || type == "verify" || type == "verify2")
@@ -168,7 +168,7 @@ module StartHelper
                if(type == "verify")
                   color_value = params[:session][:color].downcase
                   if(color_value)
-                     results = `/home/eric/Projects/Local/Websites/Resources/Code/verification/verify #{color_value}`
+                     results = `public/Resources/Code/verification/verify #{color_value}`
                      validMatch = results
 
                      #Determines if we are looking at a bot or a human
@@ -196,7 +196,7 @@ module StartHelper
                      flash[:error] = "One of the parameters was empty please ensure all are filled in."
                   else
                      flash[:success] = "Your contact info has now been sent."
-                     UserMailer.contact(@name, @email, @subject, @body).deliver_later(wait: 5.minutes)
+                     UserMailer.contact(@name, @email, @subject, @body).deliver_now
                   end
                   redirect_to root_path
                end

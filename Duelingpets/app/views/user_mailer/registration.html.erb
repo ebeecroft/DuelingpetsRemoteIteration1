@@ -4,13 +4,13 @@
       <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
    </head>
    <body>
-      <% if type == "Review" %>
+      <% if @type == "Review" %>
          <h1>New registration from <%= @registration.vname %> is awaiting review.</h1>
-      <% elsif type == "Bot" %>
+      <% elsif @type == "Bot" %>
          <h1>New Bot <%= @registration.vname %> was discovered by the review team.</h1>
       <% end %>
       <p>
-         <% if type == "Review" %>
+         <% if @type == "Review" %>
             Greetings keymasters we have a new person who wishes
             to create an account on our website. Please be sure
             to check all details of the user's information to
@@ -18,7 +18,7 @@
             a few tools that will help out with this:
             https://email-checker.net/, https://verify-email.org/,
             and https://tools.verifyemailaddress.io/.
-         <% elsif type == "Bot" %>
+         <% elsif @type == "Bot" %>
             Greetings Admin we have discovered a bot that was
             hiding among the other users during the review
             process. We used the tools that you have gave us and
@@ -29,7 +29,7 @@
          <% end %>
       </p>
       <p>
-         <% if type == "Review" %>
+         <% if @type == "Review" %>
             As members of the keymaster group you are the last
             line of defence against bot attacks. I have built
             in a capcha, a bot blacklist, the registration
@@ -42,7 +42,7 @@
             pannel to make things easier for you. If you have
             any questions you can always ask me for help. I
             wish you the best of luck.
-         <% elsif type == "Bot" %>
+         <% elsif @type == "Bot" %>
             Name: <%= @registration.first_name %>
             <%= @registration.last_name %>, Email:
             <%= @registration.email %>, Vname:
@@ -57,9 +57,9 @@
       </p>
       <br>
       <p>
-         <% if type == "Review" %>
+         <% if @type == "Review" %>
             Bolt Greywing the Admin
-         <% elsif type == "Bot" %>
+         <% elsif @type == "Bot" %>
             The Keymasters Group
          <% end %>
       </p>

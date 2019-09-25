@@ -204,11 +204,12 @@ module RegistrationsHelper
                   if(type == "verify")
                      color_value = params[:session][:color].downcase
                      if(color_value)
-                        results = `/home/eric/Projects/Local/Websites/Resources/Code/verification/verify #{color_value}`
+                        results = `public/Resources/Code/verification/verify #{color_value}`
                         validMatch = results
 
                         #Determines if we are looking at a bot or a human
                         if(!validMatch.empty? && results != "Invalid")
+                           @accounttypes = Accounttype.all
                            @registration = Registration.new
                            render "register2"
                         else
@@ -242,7 +243,7 @@ module RegistrationsHelper
                            flash[:success] = "Thank you for registration we will review your account over 
                            the next three days to see if it is legitimate."
                            url = "http://localhost:3000/registrations/review"
-                           UserMailer.registration(@registration, "Review", url).deliver_later(wait: 5.minutes)
+                           UserMailer.registration(@registration, "Review", url).deliver_later(wait: 2.minutes)
                            redirect_to root_path
                         else
                            render "register2"
@@ -266,7 +267,7 @@ module RegistrationsHelper
                            if(@user.save)
                               buildUserInfo
                               buildPouch
-                              UserMailer.login_info(@user, @user.password).deliver_later(wait: 5.minutes)
+                              UserMailer.login_info(@user, @user.password).deliver_later(wait: 2.minutes)
                               #buildBox
                               welcomeUser
                               flash[:success] = "Registration was converted to a user."
@@ -276,7 +277,7 @@ module RegistrationsHelper
                            end
                         else
                            url = "BotFound"
-                           UserMailer.registration(@registration, "Bot", url).deliver_later(wait: 5.minutes)
+                           UserMailer.registration(@registration, "Bot", url).deliver_later(wait: 2.minutes)
                            flash[:success] = "Registration was found to be a bot and was deleted."
                            @registration.destroy
                         end

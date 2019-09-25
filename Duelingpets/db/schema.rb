@@ -149,10 +149,10 @@ ActiveRecord::Schema.define(version: 2019_08_24_135057) do
 
   create_table "difficulties", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.integer "pointdebt"
-    t.integer "pointloan"
-    t.integer "emeralddebt"
-    t.integer "emeraldloan"
+    t.integer "pointdebt", default: 0
+    t.integer "pointloan", default: 0
+    t.integer "emeralddebt", default: 0
+    t.integer "emeraldloan", default: 0
     t.datetime "created_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(version: 2019_08_24_135057) do
     t.integer "blogsmallimagecost"
     t.integer "blogmusiccost"
     t.integer "blogpoints"
+    t.integer "blogmascotpoints"
     t.integer "dreyterrium_start"
     t.integer "newdreyterriumcapacity"
     t.integer "dreyterrium_extracted", default: 0
@@ -210,8 +211,8 @@ ActiveRecord::Schema.define(version: 2019_08_24_135057) do
     t.datetime "activated_on"
     t.boolean "startgame", default: false
     t.boolean "gamecompleted", default: false
-    t.integer "success"
-    t.integer "failure"
+    t.integer "success", default: 0
+    t.integer "failure", default: 0
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -293,6 +294,7 @@ ActiveRecord::Schema.define(version: 2019_08_24_135057) do
     t.date "birthday"
     t.text "message"
     t.integer "accounttype_id"
+    t.boolean "shared", default: false
     t.string "login_id"
     t.string "vname"
     t.datetime "registered_on"
@@ -344,6 +346,8 @@ ActiveRecord::Schema.define(version: 2019_08_24_135057) do
     t.date "birthday"
     t.string "login_id"
     t.string "vname"
+    t.integer "accounttype_id"
+    t.boolean "shared", default: false
     t.datetime "joined_on"
     t.datetime "registered_on"
     t.string "password_digest"
@@ -391,7 +395,9 @@ ActiveRecord::Schema.define(version: 2019_08_24_135057) do
     t.string "creationmp3"
     t.string "maintenanceogg"
     t.string "maintenancemp3"
-    t.boolean "gate_open"
+    t.string "missingpageogg"
+    t.string "missingpagemp3"
+    t.boolean "gate_open", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

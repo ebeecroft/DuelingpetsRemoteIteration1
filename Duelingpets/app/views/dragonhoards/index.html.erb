@@ -39,7 +39,7 @@
          <div class="container">Contest points cost: <%= dragonhoard.conversioncost %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase5_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease5_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
          <br>
          <div class="container">Contest points rate: <%= dragonhoard.pointscreated %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase6_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease6_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
-         <p>Unallocated points: <%= dragonhoard.unallocatedpoints %></p>
+         <p>Treasury: <%= dragonhoard.treasury %></p>
          <br>
          <p>Balancing the pages</p>
          <div class="container">Colorscheme points: <%= dragonhoard.colorschemepoints %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase3_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease3_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
@@ -84,7 +84,7 @@
          <p>Blog source: <%= dragonhoard.blogpoints %> points</p>
          <p>Blogmascot source: <%= dragonhoard.blogmascotpoints %></p>
          <p>Contest source: <%= dragonhoard.contestpoints %> points</p>
-         <p>Treasury: <%= dragonhoard.unallocatedpoints %> points</p>
+         <p>Treasury: <%= dragonhoard.treasury %> points</p>
          <% if current_user %>
            <br>
            <p><%= button_to 'Buy Emeralds for ' + getEmeraldPrice.to_s, dragonhoards_buyemeralds_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></p>

@@ -9,6 +9,8 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.date :birthday
       t.string :login_id
       t.string :vname
+      t.integer :accounttype_id
+      t.boolean :shared, default: false
       t.datetime :joined_on
       t.datetime :registered_on
       t.string :password_digest

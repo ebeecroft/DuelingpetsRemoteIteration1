@@ -1,6 +1,6 @@
 class Colorscheme < ApplicationRecord
    #Colorscheme related
-   has_many :userinfos, :foreign_key => "daycolor_id"
+   has_many :userinfos
    has_one :webcontrol, :foreign_key => "daycolor_id"
    belongs_to :user, optional: true
 

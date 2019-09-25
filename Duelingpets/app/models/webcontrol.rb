@@ -17,8 +17,8 @@ class Webcontrol < ApplicationRecord
    mount_uploader :mp3, Mp3Uploader
    mount_uploader :creationogg, CreationoggUploader
    mount_uploader :creationmp3, Creationmp3Uploader
-   mount_uploader :crazybatogv, CrazybatogvUploader
-   mount_uploader :crazybatmp4, Crazybatmp4Uploader
+   mount_uploader :missingpageogg, MissingpageoggUploader
+   mount_uploader :missingpagemp3, Missingpagemp3Uploader
    mount_uploader :maintenanceogg, MaintenanceoggUploader
    mount_uploader :maintenancemp3, Maintenancemp3Uploader
 end

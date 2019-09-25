@@ -18,6 +18,7 @@ class ForumMailer < ApplicationMailer
          email = request.to_user.email
          message = "#{request.from_user.vname}'s foruminvite is awaiting your review. [Duelingpets]"
       end
+      @type = type
       @request = request
       mail(to: email, from: websiteMail, subject: message)
    end
@@ -39,6 +40,7 @@ class ForumMailer < ApplicationMailer
          email = request.forum.user.email
          message = "#{request.user.vname} has became a new member of your #{request.forum.name} forum. [Duelingpets]"
       end
+      @type = type
       @request = request
       mail(to: email, from: websiteMail, subject: message)
    end
@@ -60,6 +62,7 @@ class ForumMailer < ApplicationMailer
          email = request.from_user.email
          message = "Your foruminvite to #{request.to_user.vname} was denied. [Duelingpets]"
       end
+      @type = type
       @request = request
       mail(to: email, from: websiteMail, subject: message)
    end
@@ -77,6 +80,7 @@ class ForumMailer < ApplicationMailer
          email = subscriber.user.email
          message = "#{content.user.vname} has created a new narrative. [Duelingpets]"
       end
+      @type = type
       @content = content
       @subscriber = subscriber
       mail(to: email, from: websiteMail, subject: message)
@@ -92,6 +96,7 @@ class ForumMailer < ApplicationMailer
          email = content.pastowner.email
          message = "#{content.pastowner.vname} your forum #{content.forum.name} was taken over by #{content.to_user.vname}. [Duelingpets]"
       end
+      @type = type
       @content = content
       mail(to: email, from: websiteMail, subject: message)
    end

@@ -24,6 +24,7 @@ class CreateDragonhoards < ActiveRecord::Migration[5.2]
       t.integer :blogsmallimagecost
       t.integer :blogmusiccost
       t.integer :blogpoints
+      t.integer :blogmascotpoints
       t.integer :dreyterrium_start
       t.integer :newdreyterriumcapacity
       t.integer :dreyterrium_extracted, default: 0

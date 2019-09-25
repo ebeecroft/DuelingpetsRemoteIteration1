@@ -11,8 +11,8 @@ module WebcontrolsHelper
          :remote_grandogg_url, :grandogg_cache, :grandmp3, :remote_grandmp3_url,
          :grandmp3_cache, :ogg, :remote_ogg_url, :ogg_cache, :mp3, :remote_mp3_url, :mp3_cache,
          :creationogg, :remote_creationogg_url, :creationogg_cache, :creationmp3,
-         :remote_creationmp3_url, :creationmp3_cache, :crazybatogv, :remote_crazybatogv_url,
-         :crazybatogv_cache, :crazybatmp4, :remote_crazybatmp4_url, :crazybatmp4_cache,
+         :remote_creationmp3_url, :creationmp3_cache, :missingpageogg, :remote_missingpageogg_url,
+         :missingpageogg_cache, :missingpagemp3, :remote_missingpagemp3_url, :missingpagemp3_cache,
          :maintenanceogg, :remote_maintenanceogg_url, :maintenanceogg_cache, :maintenancemp3,
          :remote_maintenancemp3_url, :maintenancemp3_cache, :daycolor_id, :nightcolor_id)
       end
