@@ -229,6 +229,44 @@ module UsersHelper
                else
                   redirect_to root_path
                end
+            elsif(type == "controlsOn")
+               controlvalue = 0
+               if(current_user && current_user.pouch.privilege == "Admin")
+                  if(current_user.userinfo.admincontrols_on)
+                     current_user.userinfo.admincontrols_on = false
+                  else
+                     current_user.userinfo.admincontrols_on = true
+                  end
+                  controlvalue = 1
+               elsif(current_user && current_user.pouch.privilege == "Reviewer")
+                  if(current_user.userinfo.reviewercontrols_on)
+                     current_user.userinfo.reviewercontrols_on = false
+                  else
+                     current_user.userinfo.reviewercontrols_on = true
+                  end
+                  controlvalue = 1
+               elsif(current_user && current_user.pouch.privilege == "Keymaster")
+                  if(current_user.userinfo.keymastercontrols_on)
+                     current_user.userinfo.keymastercontrols_on = false
+                  else
+                     current_user.userinfo.keymastercontrols_on = true
+                  end
+                  controlvalue = 1
+               elsif(current_user && current_user.pouch.privilege == "Manager")
+                  if(current_user.userinfo.managercontrols_on)
+                     current_user.userinfo.managercontrols_on = false
+                  else
+                     current_user.userinfo.managercontrols_on = true
+                  end
+                  controlvalue = 1
+               end
+               if(controlvalue == 1)
+                  @userinfo = current_user.userinfo
+                  @userinfo.save
+                  redirect_to user_path(current_user)
+               else
+                  redirect_to root_path
+               end
             end
          end
       end

@@ -2,5 +2,11 @@
 <div class="pageformat">
    <p><%= button_to 'Switch to Economy', economy_path, method: :get, class: "button submitbutton" %></p>
    <br>
-   <p>This gives information about the different attributes of the website.</p>
+   <p>Signups</p>
+   <p>day: <%= getStatsTimeframe("User", "Day") %>, week: <%= getStatsTimeframe("User", "Week") %>, month: <%= getStatsTimeframe("User", "Month") %>, year: <%= getStatsTimeframe("User", "Year") %>, dreiJahre: <%= getStatsTimeframe("User", "Threeyears") %>, bacon of tomato: <%= getStatsTimeframe("User", "BaconOfTomato") %></p>
+   <br>
+   <p>Groups</p>
+   <p>Rabbits: <%= getBookGroups("Rabbit") %>, Bluelands: <%= getBookGroups("Blueland") %>, Dragons: <%= getBookGroups("Dragon") %>, Silverwings: <%= getBookGroups("Silverwing") %>, Harahpins: <%= getBookGroups("Harahpin") %>, Rings: <%= getBookGroups("Rings") %></p>
+   <br>
+   <p>Visitors</p>
 </div>

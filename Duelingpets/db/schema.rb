@@ -277,6 +277,7 @@ ActiveRecord::Schema.define(version: 2019_08_24_135057) do
     t.integer "emeraldamount", default: 0
     t.integer "dreyterriumamount", default: 0
     t.integer "pouchlevel", default: 0
+    t.integer "oclevel", default: 0
     t.integer "bloglevel", default: 0
     t.integer "emeraldlevel", default: 0
     t.integer "dreyterriumlevel", default: 0
@@ -364,6 +365,10 @@ ActiveRecord::Schema.define(version: 2019_08_24_135057) do
     t.integer "emeraldinc"
     t.integer "emeraldcost"
     t.integer "emeraldmax"
+    t.integer "ocbase"
+    t.integer "ocinc"
+    t.integer "occost"
+    t.integer "ocmax"
     t.integer "blogbase"
     t.integer "bloginc"
     t.integer "blogcost"

@@ -1,10 +1,10 @@
 <% provide(:h1, "User Maintenance") %>
-<p class="centerpagecontent"><%= playMaintenanceMusic %></p>
+<p class="centerpagecontent"><%= playMusicLoop("Maintenance", nil) %></p>
 <div class="pageformat">
-   <% if checkMusicFlag == "On" %>
-      <p><%= button_to 'Unmute music', muteAudio_path, method: :post, class: "button submitbutton" %></p>
+   <% if current_user.userinfo.mute_on %>
+      <p><%= button_to 'Unmute music', muteAudio_path(:pageType => "Usermain"), method: :post, class: "button submitbutton" %></p>
    <% else %>
-      <p><%= button_to 'Mute music', muteAudio_path, method: :post, class: "button submitbutton" %></p>
+      <p><%= button_to 'Mute music', muteAudio_path(:pageType => "Usermain"), method: :post, class: "button submitbutton" %></p>
    <% end %>
 </div>
 <div class="pageformat">

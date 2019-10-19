@@ -13,6 +13,7 @@ module RegistrationsHelper
          #Blacklist variables
          names = Blacklistedname.all
          domains = Blacklisteddomain.all
+         users = User.all
          name, domain = registration.email.split("@")
          matchType = "None"
          valid = true
@@ -23,6 +24,12 @@ module RegistrationsHelper
          loginMatch = names.select{|blacklistname| blacklistname.name.downcase == registration.login_id.downcase}
          vnameMatch = names.select{|blacklistname| blacklistname.name.downcase == registration.vname.downcase}
          domainMatch = domains.select{|blacklistdomain| blacklistdomain.name.downcase == domain.downcase && blacklistdomain.domain_only}
+
+         userMatch = users.select{|user| user.vname == registration.vname || user.login_id == registration.login_id}
+         if(userMatch.count != 0)
+            flash.now[:error] = "This vname or login id is already in use. Please choose another!"
+            valid = false
+         end
 
          #Determines if this is a domain match or an email match
          if(domainMatch.count != 0)
@@ -149,13 +156,13 @@ module RegistrationsHelper
          @pouch.save
       end
 
-      def buildUserInfo
+      def buildUserInfo(user)
          #Builds the user attributes
          newInfo = Userinfo.new(params[:userinfo])
-         newInfo.audiobrowser = "ogg-browser"
-         newInfo.videobrowser = "ogv-browser"
-         newInfo.info = "This is a test"
-         newInfo.user_id = @user.id
+         newInfo.audiobrowser = "ogg"
+         newInfo.videobrowser = "ogv"
+         newInfo.user_id = user.id
+         newInfo.info = "Welcome #{user.vname} to Duelingpets!"
          newInfo.daycolor_id = 1
          newInfo.nightcolor_id = 2
          newInfo.bookgroup_id = 1
@@ -265,7 +272,7 @@ module RegistrationsHelper
                            newUser = createUser(registrationFound)
                            @user = newUser
                            if(@user.save)
-                              buildUserInfo
+                              buildUserInfo(@user)
                               buildPouch
                               UserMailer.login_info(@user, @user.password).deliver_later(wait: 2.minutes)
                               #buildBox

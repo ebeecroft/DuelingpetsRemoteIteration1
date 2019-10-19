@@ -58,20 +58,34 @@
     <%= form.text_field :remote_mp3_url %>
     <%= form.hidden_field :mp3_cache %>
   </div>
+  <br>
   <div class="pageformat">
-    <%= form.label :daycolor_id, "Select colorscheme" %><br />
+    <%= form.label :daycolor_id, "Day colorscheme" %>
     <%= form.collection_select(:daycolor_id, @colorschemes, :id, :name) %>
   </div>
+  <br>
   <div class="pageformat">
-    <%= form.label :nightcolor_id, "Select colorscheme" %><br />
+    <%= form.label :nightcolor_id, "Night colorscheme" %>
     <%= form.collection_select(:nightcolor_id, @colorschemes, :id, :name) %>
   </div>
+  <br>
   <div class="pageformat">
     <%= form.label :militarytime %>
     <%= form.check_box :militarytime %>
   </div>
+  <br>
   <div class="pageformat">
-    <%= form.label :bookgroup_id, "Select Reading Group" %><br />
+    <%= form.label :audiobrowser %>
+    <%= form.text_field :audiobrowser %>
+  </div>
+  <br>
+  <div class="pageformat">
+    <%= form.label :videobrowser %>
+    <%= form.text_field :videobrowser %>
+  </div>
+  <br>
+  <div class="pageformat">
+    <%= form.label :bookgroup_id, "Select Reading Group" %>
     <%= form.collection_select(:bookgroup_id, @group, :id, :name) %>
   </div>
   <br>

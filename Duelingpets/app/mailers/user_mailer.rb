@@ -18,6 +18,14 @@ class UserMailer < ApplicationMailer
       mail(to: email, from: websiteMail, subject: message)
    end
 
+   def altEmail(user, email)
+      websiteMail = "notification@duelingpets.net"
+      message = "Altemail Reset:[Duelingpets]"
+      @user = user
+      @email = email
+      mail(to: email, from: websiteMail, subject: message)
+   end
+
    def contact(name, email, subject, body)
       websiteMail = "notification@duelingpets.net"
       @name = name

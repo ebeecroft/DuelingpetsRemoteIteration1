@@ -9,6 +9,10 @@ class CreateUserupgrades < ActiveRecord::Migration[5.2]
       t.integer :emeraldinc
       t.integer :emeraldcost
       t.integer :emeraldmax
+      t.integer :ocbase
+      t.integer :ocinc
+      t.integer :occost
+      t.integer :ocmax
       t.integer :blogbase
       t.integer :bloginc
       t.integer :blogcost

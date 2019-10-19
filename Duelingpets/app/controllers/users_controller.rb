@@ -28,4 +28,8 @@ class UsersController < ApplicationController
    def extractore
       mode "extractore"
    end
+
+   def controlsOn
+      mode "controlsOn"
+   end
 end

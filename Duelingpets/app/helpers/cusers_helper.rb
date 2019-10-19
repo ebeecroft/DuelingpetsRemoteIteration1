@@ -6,6 +6,7 @@ module CusersHelper
          @artpage = contentFound
       end
 
+      #Combine these three
       def displayName(user)
          name = ""
          if(current_user && (current_user.pouch.privilege == "Admin" || current_user.id == user.id))
@@ -36,118 +37,75 @@ module CusersHelper
          return vname
       end
 
-      def playBatVideo
-         #This section should only turn on or play if there is a logged in user not a guest
-         video = ""
-         if(checkMusicFlag != "On")
-            control = Webcontrol.find_by_id(1)
-            if(current_user && current_user.userinfo.videobrowser == "ogv-browser")
-               video = (video_tag(getMusicOrVideo("Crazybat", control.crazybatogv_url), width: "60%", :loop => true, :autoplay => true))
-            elsif(current_user && current_user.userinfo.videobrowser == "mp4-browser")
-               video = (video_tag(getMusicOrVideo("Crazybat", control.crazybatmp4_url), width: "60%", :loop => true, :autoplay => true))
-            else
-               video = (video_tag(getMusicOrVideo("Crazybat", control.crazybatogv_url), width: "60%", :loop => true, :autoplay => true))
-            end
-         end
-         return video
-      end
+      #Combine ends
 
-      def playUserMusic(user)
-         #This section should only turn on or play if there is a logged in user not a guest
+      def playMusicLoop(type, user)
          sound = ""
-         if(checkMusicFlag != "On" && user.userinfo.music_on)
-            if(user.userinfo.ogg.to_s != "" && user.userinfo.mp3.to_s != "")
-               if(current_user && current_user.userinfo.audiobrowser == "ogg-browser")
-                  sound = (audio_tag(getMusicOrVideo("User", user), :loop => true, :autoplay => true))
-               elsif(current_user && current_user.userinfo.audiobrowser == "mp3-browser")
-                  sound = (audio_tag(getMusicOrVideo("User", user), :loop => true, :autoplay => true))
-               else
-                  sound = (audio_tag(getMusicOrVideo("User", user), :loop => true, :autoplay => true))
+         control = Webcontrol.find_by_id(1)
+         if(!current_user.userinfo.mute_on)
+            if(current_user.userinfo.audiobrowser == "ogg")
+               if(type == "Maintenance")
+                  sound = (audio_tag(getMusicOrVideo("Maintenance", control.maintenanceogg_url), :loop => true, :autoplay => true))
+               elsif(type == "Missing")
+                  sound = (audio_tag(getMusicOrVideo("Missing", control.missingpageogg_url), :loop => true, :autoplay => true))
+               elsif(type == "Hoard")
+                  dragonhoard = Dragonhoard.find_by_id(1)
+                  sound = (audio_tag(getMusicOrVideo("Sound", dragonhoard), :loop => true, :autoplay => true))
+               elsif(type == "User")
+                  if(user.userinfo.music_on)
+                     sound = (audio_tag(getMusicOrVideo("User", user), :loop => true, :autoplay => true))
+                  end
+               elsif(type == "Creative")
+                  sound = (audio_tag(getMusicOrVideo("Creative", control.creationogg_url), :loop => true, :autoplay => true))
+               elsif(type == "Homepage")
+                  criticalMode = Maintenancemode.find_by_id(2)
+                  betaMode = Maintenancemode.find_by_id(3)
+                  grandMode = Maintenancemode.find_by_id(4)
+
+                  #Plays the appropriate homepage music
+                  sound = (audio_tag(getMusicOrVideo("Homepage", control.ogg_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
+                  if(criticalMode.maintenance_on)
+                     sound = (audio_tag(getMusicOrVideo("Homepage", control.criticalogg_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
+                  elsif(betaMode.maintenance_on)
+                     sound = (audio_tag(getMusicOrVideo("Homepage", control.betaogg_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
+                  elsif(grandMode.maintenance_on)
+                     sound = (audio_tag(getMusicOrVideo("Homepage", control.grandogg_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
+                  end
                end
+            elsif(current_user.userinfo.audiobrowser == "mp3")
+               if(type == "Maintenance")
+                  sound = (audio_tag(getMusicOrVideo("Maintenance", control.maintenancemp3_url), :loop => true, :autoplay => true))
+               elsif(type == "Missing")
+                  sound = (audio_tag(getMusicOrVideo("Missing", control.missingpagemp3_url), :loop => true, :autoplay => true))
+               elsif(type == "Hoard")
+                  dragonhoard = Dragonhoard.find_by_id(1)
+                  sound = (audio_tag(getMusicOrVideo("Sound", dragonhoard), :loop => true, :autoplay => true))
+               elsif(type == "User")
+                  if(user.userinfo.music_on)
+                     sound = (audio_tag(getMusicOrVideo("User", user), :loop => true, :autoplay => true))
+                  end
+               elsif(type == "Creative")
+                  sound = (audio_tag(getMusicOrVideo("Creative", control.creationmp3_url), :loop => true, :autoplay => true))
+               elsif(type == "Homepage")
+                  criticalMode = Maintenancemode.find_by_id(2)
+                  betaMode = Maintenancemode.find_by_id(3)
+                  grandMode = Maintenancemode.find_by_id(4)
+
+                  #Plays the appropriate homepage music
+                  sound = (audio_tag(getMusicOrVideo("Homepage", control.mp3_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
+                  if(criticalMode.maintenance_on)
+                     sound = (audio_tag(getMusicOrVideo("Homepage", control.criticalmp3_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
+                  elsif(betaMode.maintenance_on)
+                     sound = (audio_tag(getMusicOrVideo("Homepage", control.betamp3_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
+                  elsif(grandMode.maintenance_on)
+                     sound = (audio_tag(getMusicOrVideo("Homepage", control.grandmp3_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
+                  end
+               end
+            else
+               raise "Invalid browser setting detected! Please choose mp3 or ogg"
             end
          end
          return sound
-      end
-
-      def playDragonhoardMusic
-         #This section should only turn on or play if there is a logged in user not a guest
-         sound = ""
-         if(checkMusicFlag != "On")
-            dragonhoard = Dragonhoard.find_by_id(1)
-            if(current_user && current_user.userinfo.audiobrowser == "ogg-browser")
-               sound = (audio_tag(getMusicOrVideo("Sound", dragonhoard), :loop => true, :autoplay => true))
-            elsif(current_user && current_user.userinfo.audiobrowser == "mp3-browser")
-               sound = (audio_tag(getMusicOrVideo("Sound", dragonhoard), :loop => true, :autoplay => true))
-            else
-               sound = (audio_tag(getMusicOrVideo("Sound", dragonhoard), :loop => true, :autoplay => true))
-            end
-         end
-      end
-
-      def playMaintenanceMusic
-         #This section should only turn on or play if there is a logged in user not a guest
-         sound = ""
-         if(checkMusicFlag != "On")
-            control = Webcontrol.find_by_id(1)
-            if(current_user && current_user.userinfo.audiobrowser == "ogg-browser")
-               sound = (audio_tag(getMusicOrVideo("Maintenance", control.maintenanceogg_url), :loop => true, :autoplay => true))
-            elsif(current_user && current_user.userinfo.audiobrowser == "mp3-browser")
-               sound = (audio_tag(getMusicOrVideo("Maintenance", control.maintenancemp3_url), :loop => true, :autoplay => true))
-            else
-               sound = (audio_tag(getMusicOrVideo("Maintenance", control.maintenanceogg_url), :loop => true, :autoplay => true))
-            end
-         end
-         return sound
-      end
-
-      def playMainMusic
-         #This section should only turn on or play if there is a logged in user not a guest
-         sound = ""
-         if(checkMusicFlag != "On")
-            control = Webcontrol.find_by_id(1)
-            criticalMode = Maintenancemode.find_by_id(2)
-            betaMode = Maintenancemode.find_by_id(3)
-            grandMode = Maintenancemode.find_by_id(4)
-            if(current_user && current_user.userinfo.audiobrowser == "ogg-browser")
-               sound = (audio_tag(getMusicOrVideo("Homepage", control.ogg_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
-               if(criticalMode.maintenance_on)
-                  sound = (audio_tag(getMusicOrVideo("Homepage", control.criticalogg_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
-               elsif(betaMode.maintenance_on)
-                  sound = (audio_tag(getMusicOrVideo("Homepage", control.betaogg_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
-               elsif(grandMode.maintenance_on)
-                  sound = (audio_tag(getMusicOrVideo("Homepage", control.grandogg_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
-               end
-            elsif(current_user && current_user.userinfo.audiobrowser == "mp3-browser")
-               sound = (audio_tag(getMusicOrVideo("Homepage", control.mp3_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
-               if(criticalMode.maintenance_on)
-                  sound = (audio_tag(getMusicOrVideo("Homepage", control.criticalmp3_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
-               elsif(betaMode.maintenance_on)
-                  sound = (audio_tag(getMusicOrVideo("Homepage", control.betamp3_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
-               elsif(grandMode.maintenance_on)
-                  sound = (audio_tag(getMusicOrVideo("Homepage", control.grandmp3_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
-               end
-            else
-               sound = (audio_tag(getMusicOrVideo("Homepage", control.ogg_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
-               if(criticalMode.maintenance_on)
-                  sound = (audio_tag(getMusicOrVideo("Homepage", control.criticalogg_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
-               elsif(betaMode.maintenance_on)
-                  sound = (audio_tag(getMusicOrVideo("Homepage", control.betaogg_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
-               elsif(grandMode.maintenance_on)
-                  sound = (audio_tag(getMusicOrVideo("Homepage", control.grandogg_url), :controls => true, :hidden => true, :loop => true, :autoplay => true))
-               end
-            end
-         end
-         return sound
-      end
-
-      def checkMusicFlag
-         if(cookies[:mute_on].nil?)
-            condition = "Off"
-            cookie_lifespan = 2.weeks.from_now.utc
-            cookies[:mute_on] = {:value => condition, :expires => cookie_lifespan}
-         else
-            cookies[:mute_on]
-         end
       end
 
       def getUserPrivilege(user)
@@ -221,6 +179,8 @@ module CusersHelper
             allContents = Sound.order("created_on desc")
          elsif(type == "Book")
             allContents = Book.order("created_on desc")
+         elsif(type == "OC")
+            allContents = Oc.order("created_on desc")
          else
             raise "Invalid content type detected!"
          end
@@ -230,7 +190,7 @@ module CusersHelper
       end
 
       def checkBookgroupStatus(content)
-         group = ((content.bookgroup.name == "Peter Rabbit") || (current_user && content.bookgroup.id <= getBookGroups(current_user)))
+         group = ((content.bookgroup.name == "Peter-Rabbit") || (current_user && content.bookgroup.id <= getReadingGroup(current_user, "Id")))
          return group
       end
 
@@ -238,15 +198,15 @@ module CusersHelper
          music = ""
          if(current_user)
             #Determine if we are looking at a video or audio browser
-            oggbrowser = (current_user.userinfo.audiobrowser == "ogg-browser")
-            if(type == "Movie" || type == "Crazybat")
-               oggbrowser = (current_user.userinfo.videobrowser == "ogv-browser")
+            oggbrowser = (current_user.userinfo.audiobrowser == "ogg")
+            if(type == "Movie")
+               oggbrowser = (current_user.userinfo.videobrowser == "ogv")
             end
 
             #Determine if we are looking at a video or audio browser
-            mp3browser = (current_user.userinfo.audiobrowser == "mp3-browser")
-            if(type == "Movie" || type == "Crazybat")
-               mp3browser = (current_user.userinfo.videobrowser == "mp4-browser")
+            mp3browser = (current_user.userinfo.audiobrowser == "mp3")
+            if(type == "Movie")
+               mp3browser = (current_user.userinfo.videobrowser == "mp4")
             end
 
             #Determines the correct type of content to play
@@ -258,7 +218,7 @@ module CusersHelper
                   music = content.ogv_url
                elsif(type == "Sound")
                   music = content.ogg_url
-               elsif(type == "Homepage" || "Crazybat" || "Maintenance")
+               elsif((type != "User" && type != "Movie") && (type != "Sound"))
                   music = content
                end
             elsif(mp3browser)
@@ -269,7 +229,7 @@ module CusersHelper
                   music = content.mp4_url
                elsif(type == "Sound")
                   music = content.mp3_url
-               elsif(type == "Homepage" || "Crazybat" || "Maintenance")
+               elsif((type != "User" && type != "Movie") && (type != "Sound"))
                   music = content
                end
             end
@@ -282,7 +242,7 @@ module CusersHelper
                music = content.ogv_url
             elsif(type == "Sound")
                music = content.ogg_url
-            elsif(type == "Homepage" || "Crazybat" || "Maintenance")
+            elsif((type != "User" && type != "Movie") && (type != "Sound"))
                music = content
             end
          end

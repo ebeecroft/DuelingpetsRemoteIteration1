@@ -27,6 +27,9 @@ class ContentMailer < ApplicationMailer
       if(type == "Blog")
          email = content.user.email
          message = "Your blog #{content.title} was approved:[Duelingpets]"
+      elsif(type == "OC")
+         email = content.user.email
+         message = "Your oc #{content.name} was approved:[Duelingpets]"
       end
       @type = type
       @content = content
@@ -36,9 +39,14 @@ class ContentMailer < ApplicationMailer
 
    def content_denied(content, type)
       websiteMail = "notification@duelingpets.net"
+      email = ""
+      message = ""
       if(type == "Blog")
          email = content.user.email
          message = "Your blog #{content.title} was denied:[Duelingpets]"
+      elsif(type == "OC")
+         email = content.user.email
+         message = "Your oc #{content.name} was denied:[Duelingpets]"
       end
       @type = type
       @content = content
@@ -46,8 +54,11 @@ class ContentMailer < ApplicationMailer
    end
 
    def content_review(content, type, url)
+      message = ""
       if(type == "Blog")
          message = "New blog #{content.title} is awaiting review:[Duelingpets]"
+      elsif(type == "OC")
+         message = "New oc #{content.name} is awaiting review:[Duelingpets]"
       end
       @type = type
       @content = content

@@ -27,7 +27,7 @@ module SessionsHelper
          redirect_to login_path
       end
 
-      def emailUser(loginUser)
+      def emailUser(loginUser, email)
          #Creates a random new password
          token = SecureRandom.urlsafe_base64
          loginUser.password = token
@@ -36,7 +36,12 @@ module SessionsHelper
          #Sends the user an email with their new password
          @user = loginUser
          @user.save
-         UserMailer.user_info(@user, "Resetpassword").deliver_now
+
+         if(email == "")
+            UserMailer.user_info(@user, "Resetpassword").deliver_now
+         else
+            UserMailer.altEmail(@user, email).deliver_now
+         end
          flash[:success] = "Your password was succesfully sent"
          redirect_to root_path
       end
@@ -101,14 +106,18 @@ module SessionsHelper
       end
 
       def recoverpage(type, pagemode)
-         if(type == "recoverpost")
+         if(type == "recoverpost" || type == "altemailpost")
             loginUser = User.find_by_login_id(params[:session][:login_id].downcase)
             vnameUser = User.find_by_vname(params[:session][:vname].downcase)
+            email = ""
+            if(type == "altemailpost")
+               email = (params[:session][:email].downcase)
+            end
             if(loginUser && vnameUser && loginUser.pouch.activated && loginUser.id == vnameUser.id)
                if(pagemode == "Admin" && loginUser.pouch.privilege == "Admin")
-                  emailUser(loginUser)
+                  emailUser(loginUser, email)
                elsif(pagemode == "User")
-                  emailUser(loginUser)
+                  emailUser(loginUser, email)
                else
                   flash.now[:error] = "Only the admin can recover at this time."
                   render "recover"
@@ -174,6 +183,15 @@ module SessionsHelper
                loginpage(type, "User")
             end
          elsif(type == "recover" || type == "recoverpost")
+            removeTransactions
+            displayGreeter("Recover")
+            allMode = Maintenancemode.find_by_id(1)
+            if(allMode.maintenance_on)
+               recoverpage(type, "Admin")
+            else
+               recoverpage(type, "User")
+            end
+         elsif(type == "altemail" || type == "altemailpost")
             removeTransactions
             displayGreeter("Recover")
             allMode = Maintenancemode.find_by_id(1)

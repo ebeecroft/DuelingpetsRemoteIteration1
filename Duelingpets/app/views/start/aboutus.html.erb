@@ -1,39 +1,5 @@
 <% provide(:h1, "About Us") %>
 <div class="pageformat">
-   <p>We are a virtual petsite community that cators to people
-      of all walks of life. In order to keep this balance we take
-      great care in making sure that all content is sorted into
-      the appropriate groups. We make sure that any non reviewed
-      content is not made visable to the public. To
-      do so our review team checks every bit of uploaded content
-      to make certain it operates within acceptable parameters
-      for each group. Unlike other sites that check content after
-      the fact we try to do a preemptive content check to mitigate
-      the bad content that might arise.
-   </p>
-   <br>
-   <p>Though we do perform these checks up front somethings might
-      fall through the cracks. If such a thing does happen please
-      contact us immediately and we will look into the situation.
-      Our community is only strong if we work together. What you
-      might have noticed is that our registration section is
-      sometimes closed from time to time. Due to bot attacks on
-      the site in the past we had to add a couple of antibot
-      measures to mitigate the chance of bots coming in. When
-      you register for an account on this site all information
-      is screened by our team of keymasters to determine if the
-      registration is legimate.
-   </p>
-   <br>
-   <p>Once our team of keymasters has approved or denied the
-      registration request the registration information is
-      automatically deleted. If your registration is approved
-      then a user account will be created from the supplied
-      registration information. A registration and user accounts
-      are two seperate entities. This was designed to keep bot
-      accounts restricted to the registration and not take up
-      valueable user account space. In order for our team to
-      send emails to you, a valid email address is required to
-      play on this site.
-   </p>
+   <p><%= image_tag(@artpage.art_url(:thumb)) %></p>
+   <p><%= textFormater("Multi", @artpage.message, "All").html_safe %></p>
 </div>

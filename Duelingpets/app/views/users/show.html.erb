@@ -1,24 +1,26 @@
 <% provide(:h1, @user.vname + "'s profile") %>
 <p id="notice"><%= notice %></p>
 <% if current_user %>
-   <p class="centerpagecontent"><%= playUserMusic(@user) %></p>
+   <p class="centerpagecontent"><%= playMusicLoop("User", @user) %></p>
 <% end %>
 <div class="pageformat">
    <% if current_user && current_user.id == @user.id %>
-      <div class="container">
-      <% if @user.userinfo.music_on %>
-         <p><%= button_to 'Turn off music', users_music_path(:id=>@user.id), method: :post, class: "button submitbutton" %></p>
-      <% else %>
-         <p><%= button_to 'Turn on music', users_music_path(:id=>@user.id), method: :post, class: "button submitbutton" %></p>
+      <% if @user.userinfo.ogg.to_s != "" || @user.userinfo.mp3.to_s != "" %>
+         <div class="container">
+         <% if @user.userinfo.music_on %>
+            <p><%= button_to 'Turn off music', users_music_path(:id=>@user.id), method: :post, class: "button submitbutton" %></p>
+         <% else %>
+            <p><%= button_to 'Turn on music', users_music_path(:id=>@user.id), method: :post, class: "button submitbutton" %></p>
+         <% end %>
+         </div>
       <% end %>
-      </div>
    <% end %>
    <% if current_user %>
       <div class="container">
-         <% if checkMusicFlag == "On" %>
-            <p><%= button_to 'Unmute music', muteAudio_path, method: :post, class: "button submitbutton" %></p>
+         <% if current_user.userinfo.mute_on %>
+            <p><%= button_to 'Unmute music', muteAudio_path(:pageType => "User"), method: :post, class: "button submitbutton" %></p>
          <% else %>
-            <p><%= button_to 'Mute music', muteAudio_path, method: :post, class: "button submitbutton" %></p>
+            <p><%= button_to 'Mute music', muteAudio_path(:pageType => "User"), method: :post, class: "button submitbutton" %></p>
          <% end %>
       </div>
       <br>
@@ -76,17 +78,34 @@
    <p><%= textFormater("Multi", @user.userinfo.info, "All").html_safe %></p>
    <% if current_user && current_user.id == @user.id && current_user.pouch.privilege == "Admin" %>
       <br>
-      <p><%= button_to 'Admin Controls', admincontrols_path, method: :get, class: "button submitbutton" %></p>
+      <% if current_user.userinfo.admincontrols_on %>
+         <p><%= button_to 'Admin Off', users_controlsOn_path, method: :post, class: "button submitbutton" %></p>
+         <p><%= button_to 'Admin Controls', admincontrols_path, method: :get, class: "button submitbutton" %></p>
+      <% else %>
+         <p><%= button_to 'Admin On', users_controlsOn_path, method: :post, class: "button submitbutton" %></p>
+      <% end %>
    <% elsif current_user && current_user.id == @user.id && current_user.pouch.privilege == "Keymaster" %>
       <br>
-      <p><%= button_to 'Keymaster Controls', keymastercontrols_path, method: :get, class: "button submitbutton" %></p>
+      <% if current_user.userinfo.keymastercontrols_on %>
+         <p><%= button_to 'Keymaster Off', users_controlsOn_path, method: :post, class: "button submitbutton" %></p> 
+         <p><%= button_to 'Keymaster Controls', keymastercontrols_path, method: :get, class: "button submitbutton" %></p>
+      <% else %>
+         <p><%= button_to 'Keymaster On', users_controlsOn_path, method: :post, class: "button submitbutton" %></p>
+      <% end %>
    <% elsif current_user && current_user.id == @user.id && current_user.pouch.privilege == "Reviewer" %>
       <br>
-      <p><%= button_to 'Reviewer Controls', reviewercontrols_path, method: :get, class: "button submitbutton" %></p>
+      <% if current_user.userinfo.reviewercontrols_on %>
+         <p><%= button_to 'Reviewer Off', users_controlsOn_path, method: :post, class: "button submitbutton" %></p>
+         <p><%= button_to 'Reviewer Controls', reviewercontrols_path, method: :get, class: "button submitbutton" %></p>
+      <% else %>
+         <p><%= button_to 'Reviewer On', users_controlsOn_path, method: :post, class: "button submitbutton" %></p>
+      <% end %>
    <% end %>
    <br>
    <p>Upgrade levels</p>
    <div class="container">Pouch level: <%= @user.pouch.pouchlevel %>/<%= getUpgradeMax("Pouch") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("Pouch", @user.pouch).to_s, pouches_buy1_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
+   <br>
+   <div class="container">OC level: <%= @user.pouch.oclevel %>/<%= getUpgradeMax("OC") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("OC", @user.pouch).to_s, pouches_buy3_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
    <br>
    <div class="container">Blog level: <%= @user.pouch.bloglevel %>/<%= getUpgradeMax("Blog") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("Blog", @user.pouch).to_s, pouches_buy3_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
    <br>
@@ -94,6 +113,22 @@
    <br>
    <div class="container">Dreyterrium level: <%= @user.pouch.dreyterriumlevel %>/<%= getUpgradeMax("Dreyterrium") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("Dreyterrium", @user.pouch).to_s, pouches_buy4_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
    <br>
+   <% if getUserContent(@user, "OCs") != 0 %>
+      <br>
+      <p>OC section</p>
+      <div class="container"><%= button_to "My OCs", user_ocs_path(@user), method: :get, class: "button submitbutton" %></div>
+      <% if current_user && current_user.id == @user.id %>
+         <div class="container"><%= button_to "New OC", new_user_oc_path(@user), method: :get, class: "button submitbutton" %></div>
+      <% end %>
+      <br>
+      <p>OC limit: <%= @user.ocs.count %>/<%= getUpgradeLimit(@user.pouch, "OC") %></p>
+   <% else %>
+      <% if current_user && current_user.id == @user.id %>
+         <br>
+         <p>OC section</p>
+         <p><%= button_to "New OC", new_user_oc_path(@user), method: :get, class: "button submitbutton" %></p>
+      <% end %>
+   <% end %>
    <% if getUserContent(@user, "Blog") != 0 || getUserContent(@user, "Adblog") != 0 %>
       <br>
       <p>Blog section</p>

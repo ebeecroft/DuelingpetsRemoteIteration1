@@ -1,0 +1,26 @@
+<% provide(:h1, "Admincontrol panel") %>
+<div class="pageformat">
+   <p class="formlinks">Artpage index: <%= link_to "Artpage", artpages_path %></p>
+   <p class="formlinks">Bookgroup index: <%= link_to "Bookgroup", bookgroups_path %></p>
+   <p class="formlinks">Colorscheme list: <%= link_to "Colorscheme", colorschemes_list_path %></p>
+   <p class="formlinks">Maintenancemode index: <%= link_to "Maintenancemode", maintenancemodes_path %></p>
+   <p class="formlinks">Pouch index: <%= link_to "Pouch", pouches_path %></p>
+   <p class="formlinks">Registration index: <%= link_to "Registration", registrations_path %></p>
+   <p class="formlinks">Userinfo index: <%= link_to "Userinfo", userinfos_path %></p>
+   <p class="formlinks">User index: <%= link_to "User", users_path %></p>
+   <p class="formlinks">Webcontrol index: <%= link_to "Webcontrol", webcontrols_path %></p>
+   <p class="formlinks">Suspendedtimelimit index: <%= link_to "Timelimit", suspendedtimelimits_path %></p>
+   <p class="formlinks">Blacklistedname index: <%= link_to "Blacklistedname", blacklistednames_path %></p>
+   <p class="formlinks">Blacklisteddomain index: <%= link_to "Blacklisteddomain", blacklisteddomains_path %></p>
+   <p class="formlinks">Userupgrade index: <%= link_to "Userupgrade", userupgrades_path %></p>
+   <p class="formlinks">Dragonhoard index: <%= link_to "Hoard", dragonhoards_path %></p>
+   <p class="formlinks">OC list: <%= link_to "OC", ocs_list_path %></p>
+   <p class="formlinks">OC review: <%= link_to "Review", ocs_review_path %></p>
+   <p class="formlinks">Blog list: <%= link_to "Blog", blogs_list_path %></p>
+   <p class="formlinks">Blog review: <%= link_to "Review", blogs_review_path %></p>
+   <p class="formlinks">Economy list: <%= link_to "Economy", economies_path %></p>
+   <br>
+   <p><%= button_to gateValue, registrations_gate_path, method: :post, class: "button submitbutton" %></p>
+   <br>
+   <p class="formlinks"><%= link_to 'Back', root_path %></p>
+</div>

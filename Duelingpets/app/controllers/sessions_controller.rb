@@ -21,6 +21,14 @@ class SessionsController < ApplicationController
       mode "recoverpost"
    end
 
+   def altemail
+      mode "altemail"
+   end
+
+   def altemailpost
+      mode "altemailpost"
+   end
+
    def activate
       mode "activate"
    end

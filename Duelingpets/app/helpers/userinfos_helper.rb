@@ -7,7 +7,7 @@ module UserinfosHelper
             value = params[:id]
          elsif(type == "Userinfo")
             value = params.require(:userinfo).permit(:avatar, :remote_avatar_url, :avatar_cache, :miniavatar,
-            :remote_miniavatar_url, :miniavatar_cache, :ogg, :remote_ogg_url, :ogg_cache, :info, :daycolor_id, :nightcolor_id)
+            :remote_miniavatar_url, :miniavatar_cache, :ogg, :remote_ogg_url, :ogg_cache, :info, :daycolor_id, :nightcolor_id, :bookgroup_id, :audiobrowser, :videobrowser)
          elsif(type == "Page")
             value = params[:page]
          else

@@ -8,6 +8,10 @@ module PouchesHelper
             if(pouch.pouchlevel < upgrade.pouchmax)
                cost = upgrade.pouchcost * (pouch.pouchlevel + 1)
             end
+         elsif(type == "OC")
+            if(pouch.oclevel < upgrade.ocmax)
+               cost = upgrade.occost * (pouch.oclevel + 1)
+            end
          elsif(type == "Blog")
             if(pouch.bloglevel < upgrade.blogmax)
                cost = upgrade.blogcost * (pouch.bloglevel + 1)
@@ -29,6 +33,8 @@ module PouchesHelper
          max = 0
          if(type == "Pouch")
             max = upgrade.pouchbase + (upgrade.pouchinc * pouch.pouchlevel)
+         elsif(type == "OC")
+            max = upgrade.ocbase + (upgrade.ocinc * pouch.oclevel)
          elsif(type == "Blog")
             max = upgrade.blogbase + (upgrade.bloginc * pouch.bloglevel)
          elsif(type == "Emerald")
@@ -44,6 +50,8 @@ module PouchesHelper
          max = 0
          if(type == "Pouch")
             max = upgrade.pouchmax
+         elsif(type == "OC")
+            max = upgrade.ocmax
          elsif(type == "Blog")
             max = upgrade.blogmax
          elsif(type == "Emerald")
@@ -65,6 +73,8 @@ module PouchesHelper
                price = 0
                if(type == "upgradepouch")
                   price = getUpgradeCost("Pouch", pouchFound)
+               elsif(type == "upgradeoc")
+                  price = getUpgradeCost("OC", pouchFound)
                elsif(type == "upgradeblog")
                   price = getUpgradeCost("Blog", pouchFound)
                elsif(type == "upgradeemerald")
@@ -76,6 +86,8 @@ module PouchesHelper
                   pouchFound.amount -= price
                   if(type == "upgradepouch")
                      pouchFound.pouchlevel += 1
+                  elsif(type == "upgradeoc")
+                     pouchFound.oclevel += 1
                   elsif(type == "upgradeblog")
                      pouchFound.bloglevel += 1
                   elsif(type == "upgradeemerald")
@@ -87,6 +99,8 @@ module PouchesHelper
                   @pouch.save
                   if(type == "upgradepouch")
                      message = "Your pouch level is now: #{@pouch.pouchlevel}"
+                  elsif(type == "upgradeoc")
+                     message = "Your oc level is now: #{@pouch.oclevel}"
                   elsif(type == "upgradeblog")
                      message = "Your blog level is now: #{@pouch.bloglevel}"
                   elsif(type == "upgradeemerald")
@@ -148,7 +162,7 @@ module PouchesHelper
                else
                   render "webcontrols/crazybat"
                end
-            elsif(type == "upgradepouch" || type == "upgradeblog" || type == "upgradeemerald" || type == "upgradedreyterrium")
+            elsif(type == "upgradepouch" || type == "upgradeoc" || type == "upgradeblog" || type == "upgradeemerald" || type == "upgradedreyterrium")
                logged_in = current_user
                if(logged_in)
                   upgradeUser(type, logged_in)

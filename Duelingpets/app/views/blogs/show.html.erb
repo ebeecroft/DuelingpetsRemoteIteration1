@@ -19,7 +19,7 @@
    <p><%= image_tag(@blog.user.userinfo.miniavatar_url(:thumb)) %></p>
    <% if @blog.adbanner.to_s == "" %>
       <div class="container"><p class="formlinks">Blogger: <%= getUserPrivilege(@blog.user) %><%= link_to @blog.user.vname, user_path(@blog.user) %></p></div>
-      <% if current_user && (current_user.id == @blog.user_id || current_user.admin) %>
+      <% if current_user && (current_user.id == @blog.user_id || current_user.pouch.privilege == "Admin") %>
          <div class="container"><%= button_to 'Edit Blog', edit_user_blog_path(@blog.user, @blog), method: :get, class: "button editbutton" %></div> <div class="container"><%= button_to 'Destroy Blog', [@blog.user, @blog], method: :delete, class: "button destroybutton", data: { confirm: 'Are you sure?' } %></div>
       <% end %>
    <% else %>

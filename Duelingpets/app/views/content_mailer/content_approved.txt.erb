@@ -1,22 +1,31 @@
 <% if @type == "Blog" %>
    Your new blog <%= @content.title %> was approved!
+<% elsif @type == "OC" %>
+   Your new oc <%= @content.name %> was approved!
 <% end %>
 ===============================================
- 
+
+Our review team has taken the time to do look over
+the <%= @type.downcase %> you submited to our site and found
+that it fits into the correct book group. The 
 <% if @type == "Blog" %>
-   Our review team has taken the time to do look over
-   the blog you submited to our site and found
-   that it fits into the correct book group. The
    images if any that this blog contains appear
    to be operating within normal parameters.
    Depending on wether or not this blog is running
    with ads we have taken the liberty of removing
    or adding points to your points account. Blogs
    are a good place to advertise your artwork,
-   pets, movies, or sounds. In recognition
-   of your effort we had decided to add these 
-   <%= points %> points to your account.
+   pets, movies, or sounds.
+<% elsif @type == "OC" %>
+   oc itself has a lot of interesting looking features,
+   the background tunes are well out of this world. The
+   voice is really well done and reflects the feel of
+   the character itself. The image of the character
+   itself looks really cool and looks like you put in a
+   lot of effort in its design.
 <% end %>
+In recognition of your effort we have decided
+to add these <%= @points %> points to your account.
 
 
 The Duelingpets Staff Team

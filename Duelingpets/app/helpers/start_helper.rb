@@ -1,6 +1,58 @@
 module StartHelper
 
    private
+      def getTimeDifference(type, content)
+         value = ""
+         if(type == "User")
+            value = (currentTime - content.joined_on)
+         end
+         return value
+      end
+
+      def getStatsTimeframe(type, timeframe)
+         allContents = ""
+         firstContent = ""
+         nonBot = ""   
+
+         if(type == "User")
+            allContents = User.all
+            firstContent = User.first.joined_on.year
+            nonBot = allContents.select{|content| ((content.pouch.privilege != "Bot") && (content.pouch.privilege != "Trial")) && (content.pouch.privilege != "Admin")}
+         end
+
+         #Finds all the content created on a specific day
+         day = nonBot.select{|content| getTimeDifference(type, content) <= 1.day}
+         week = nonBot.select{|content| getTimeDifference(type, content) <= 1.week}
+         month = nonBot.select{|content| getTimeDifference(type, content) <= 1.month}
+         year = nonBot.select{|content| getTimeDifference(type, content) <= 1.year}
+         threeyear = nonBot.select{|content| getTimeDifference(type, content) <= 3.years}
+         bacot = nonBot.select{|content| getTimeDifference(type, content) > (firstContent - 1.year)}
+
+         #Sums up the data for the particular timeframe
+         dayCount = day.count
+         weekCount = week.count - dayCount
+         monthCount = month.count - weekCount - dayCount
+         yearCount = year.count - monthCount - weekCount - dayCount
+         dreiJahreCount = threeyear.count - yearCount - monthCount - weekCount - dayCount
+         bacotCount = bacot.count - dreiJahreCount - yearCount - monthCount - weekCount - dayCount
+
+         total = dayCount
+         if(timeframe == "Week")
+            total = weekCount
+         elsif(timeframe == "Month")
+            total = monthCount
+         elsif(timeframe == "Year")
+            total = yearCount
+         elsif(timeframe == "Threeyears")
+            total = dreiJahreCount
+         elsif(timeframe == "BaconOfTomato")
+            total = bacotCount
+         elsif(timeframe == "All")
+            total = nonBot.count
+         end
+         return total
+      end
+
       def userAlertNotify
          #Displays the alerts to the user if any
          alertLimit = 6
@@ -162,6 +214,9 @@ module StartHelper
             if(type == "home" || type == "aboutus" || type == "hubworld")
                #Initially empty
                removeTransactions
+               if(type == "aboutus")
+                  displayGreeter("Aboutus")
+               end
             elsif(type == "contact" || type == "verify" || type == "verify2")
                #Consider adding a greater to contact page
                removeTransactions
@@ -201,15 +256,29 @@ module StartHelper
                   redirect_to root_path
                end
             elsif(type == "muteAudio")
-               value = ""
-               if(checkMusicFlag == "On")
-                  value = "Off"
-               else
-                  value = "On"
+               if(current_user)
+                  if(current_user.userinfo.mute_on)
+                     current_user.userinfo.mute_on = false
+                  else
+                     current_user.userinfo.mute_on = true
+                  end
+                  @userinfo = current_user.userinfo
+                  @userinfo.save
                end
-               cookies[:mute_on] = {:value => value}
-               redirect_to root_path
-            elsif(type == "admincontrols" || type == "keymastercontrols" || type == "reviewercontrols")
+               if(params[:pageType] == "Home")
+                  redirect_to root_path
+               elsif(params[:pageType] == "Hoard")
+                  redirect_to dragonhoards_path
+               elsif(params[:pageType] == "User")
+                  redirect_to user_path(current_user)
+               elsif(params[:pageType] == "Missing")
+                  redirect_to crazybat_path
+               elsif(params[:pageType] == "CreativeOC")
+                  redirect_to new_user_oc_path(current_user)
+               elsif(params[:pageType] == "Usermain")
+                  redirect_to root_path
+               end
+            elsif(type == "admincontrols" || type == "keymastercontrols" || type == "reviewercontrols" || type == "managercontrols")
             end
          end
       end

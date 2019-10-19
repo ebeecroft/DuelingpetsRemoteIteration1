@@ -6,12 +6,13 @@ module OcsHelper
          if(type == "Id")
             value = params[:id]
          elsif(type == "OcId")
-            value = params[:blog_id]
+            value = params[:oc_id]
          elsif(type == "User")
             value = params[:user_id]
          elsif(type == "Oc")
             value = params.require(:oc).permit(:name, :description, :nickname, :species, :age, :personality, :likesanddislikes, :backgroundandhistory, :relatives, :family, :friends, :world, :alignment, :alliance, :elements, :appearance, :clothing, :accessories, :image, :remote_image_url, :image_cache, :ogg, :remote_ogg_url, :ogg_cache,
-            :mp3, :remote_mp3_url, :mp3_cache, :created_on, :updated_on, :reviewed_on, :reviewed, :user_id, :bookgroup_id)
+            :mp3, :remote_mp3_url, :mp3_cache, :voiceogg, :remote_voiceogg_url, :voiceogg_cache, :voicemp3, :remote_voicemp3_url, :voicemp3_cache,
+            :created_on, :updated_on, :reviewed_on, :reviewed, :user_id, :bookgroup_id)
          elsif(type == "Page")
             value = params[:page]
          else
@@ -24,15 +25,15 @@ module OcsHelper
          if(optional)
             userFound = User.find_by_vname(optional)
             if(userFound)
-               userOcs = userFound.ocs.order("reviewed_on desc, created_on desc")
-               ocsReviewed = userBlogs.select{|oc| oc.reviewed || (current_user && oc.user_id == current_user.id)}
+               userOCs = userFound.ocs.order("reviewed_on desc, created_on desc")
+               ocsReviewed = userOCs.select{|oc| (current_user && oc.user_id == current_user.id) || (oc.reviewed && checkBookgroupStatus(oc))}
                @user = userFound
             else
                render "webcontrols/crazybat"
             end
          else
-            allOcs = Oc.order("reviewed_on desc, created_on desc")
-            ocsReviewed = allOcs.select{|oc| oc.reviewed || (current_user && oc.user_id == current_user.id)}
+            allOCs = Oc.order("reviewed_on desc, created_on desc")
+            ocsReviewed = allOCs.select{|oc| (current_user && oc.user_id == current_user.id) || (oc.reviewed && checkBookgroupStatus(oc))}
          end
          @ocs = Kaminari.paginate_array(ocsReviewed).page(getOcParams("Page")).per(10)
       end
@@ -153,26 +154,11 @@ module OcsHelper
 
                         if(type == "create")
                            if(@oc.save)
-                              hoard = Dragonhoard.find_by_id(1)
-                              #pointsForOcs = hoard.colorschemepoints
-                              pointsForOcs = 16
-                              pouchFound = Pouch.find_by_user_id(logged_in.id)
-                              pouchFound.amount += pointsForOcs
-
-                              #Adds the oc points to the economy
-                              newTransaction = Economy.new(params[:economy])
-                              newTransaction.econtype = "Content"
-                              newTransaction.content_type = "OC"
-                              newTransaction.name = "Source"
-                              newTransaction.amount = pointsForOcs
-                              newTransaction.user_id = ocFound.user_id
-                              newTransaction.created_on = currentTime
-                              @economytransaction = newTransaction
-                              @economytransaction.save
-
-                              ContentMailer.content_created(@oc, "OC", pointsForOcs).deliver_later(wait: 5.minutes)
-                              @pouch = pouchFound
-                              @pouch.save
+                              url = "http://www.duelingpets.net/ocs/review" #"http://localhost:3000/blogs/review"
+                              #if(type == "Production")
+                              #   url = "http://www.duelingpets.net/blogs/review"
+                              #end
+                              ContentMailer.content_review(@oc, "OC", url).deliver_now
                               flash[:success] = "#{@oc.name} was successfully created."
                               redirect_to user_oc_path(@user, @oc)
                            else
@@ -244,19 +230,35 @@ module OcsHelper
                logged_in = current_user
                if(logged_in)
                   ocFound = Oc.find_by_id(getOcParams("OcId"))
-                  if(artFound)
+                  if(ocFound)
                      pouchFound = Pouch.find_by_user_id(logged_in.id)
-                     if(logged_in.admin || ((pouchFound.privilege == "Keymaster") || (pouchFound.privilege == "Reviewer")))
+                     if((logged_in.pouch.privilege == "Admin") || ((pouchFound.privilege == "Keymaster") || (pouchFound.privilege == "Reviewer")))
                         if(type == "approve")
                            ocFound.reviewed = true
-                           pouch = Pouch.find_by_user_id(ocFound.user_id)
-                           pointsForOc = 16
-                           pouch.amount += pointsForOc
-                           @pouch = pouch
-                           @pouch.save
+                           ocFound.reviewed_on = currentTime
+                           #hoard = Dragonhoard.find_by_id(1)
+                           #pointsForOcs = hoard.colorschemepoints
                            @oc = ocFound
                            @oc.save
-                           #ContentMailer.art_approved(@art, pointsForArt).deliver
+
+                           pointsForOC = 20
+                           pouch = Pouch.find_by_user_id(@oc.user_id)
+                           pouch.amount += pointsForOC
+                           @pouch = pouch
+                           @pouch.save
+
+                           #Adds the oc points to the economy
+                           newTransaction = Economy.new(params[:economy])
+                           newTransaction.econtype = "Content"
+                           newTransaction.content_type = "OC"
+                           newTransaction.name = "Source"
+                           newTransaction.amount = pointsForOC
+                           newTransaction.user_id = ocFound.user_id
+                           newTransaction.created_on = currentTime
+                           @economytransaction = newTransaction
+                           @economytransaction.save
+
+                           ContentMailer.content_approved(@oc, "OC", pointsForOC).deliver_now
                            #allWatches = Watch.all
                            #watchers = allWatches.select{|watch| (((watch.watchtype.name == "Arts" || watch.watchtype.name == "Blogarts") || (watch.watchtype.name == "Artsounds" || watch.watchtype.name == "Artmovies")) || (watch.watchtype.name == "Maincontent" || watch.watchtype.name == "All")) && watch.from_user.id != @art.user_id}
                            #if(watchers.count > 0)
@@ -267,7 +269,7 @@ module OcsHelper
                            value = "#{@oc.user.vname}'s oc #{@oc.name} was approved."
                         else
                            @oc = ocFound
-                           #ContentMailer.art_denied(@art).deliver
+                           ContentMailer.content_denied(@oc, "OC").deliver_now
                            value = "#{@oc.user.vname}'s oc #{@oc.name} was denied."
                         end
                         flash[:success] = value
@@ -276,7 +278,7 @@ module OcsHelper
                         redirect_to root_path
                      end
                   else
-                     render "start/crazybat"
+                     render "webcontrols/crazybat"
                   end
                else
                   redirect_to root_path

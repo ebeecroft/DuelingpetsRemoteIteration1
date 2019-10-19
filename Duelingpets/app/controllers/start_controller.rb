@@ -1,6 +1,5 @@
 class StartController < ApplicationController
    include StartHelper
-   #include EconomyretrievalHelper
 
    def home
       mode "home"
