@@ -101,18 +101,25 @@
          <p><%= button_to 'Reviewer On', users_controlsOn_path, method: :post, class: "button submitbutton" %></p>
       <% end %>
    <% end %>
-   <br>
-   <p>Upgrade levels</p>
-   <div class="container">Pouch level: <%= @user.pouch.pouchlevel %>/<%= getUpgradeMax("Pouch") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("Pouch", @user.pouch).to_s, pouches_buy1_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
-   <br>
-   <div class="container">OC level: <%= @user.pouch.oclevel %>/<%= getUpgradeMax("OC") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("OC", @user.pouch).to_s, pouches_buy3_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
-   <br>
-   <div class="container">Blog level: <%= @user.pouch.bloglevel %>/<%= getUpgradeMax("Blog") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("Blog", @user.pouch).to_s, pouches_buy3_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
-   <br>
-   <div class="container">Emerald level: <%= @user.pouch.emeraldlevel %>/<%= getUpgradeMax("Emerald") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("Emerald", @user.pouch).to_s, pouches_buy2_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
-   <br>
-   <div class="container">Dreyterrium level: <%= @user.pouch.dreyterriumlevel %>/<%= getUpgradeMax("Dreyterrium") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("Dreyterrium", @user.pouch).to_s, pouches_buy4_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
-   <br>
+   <% if current_user %>
+      <br>
+      <p>Upgrade levels</p>
+      <div class="container">Pouch level: <%= @user.pouch.pouchlevel %>/<%= getUpgradeMax("Pouch") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("Pouch", @user.pouch).to_s, pouches_buy1_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
+      <br>
+      <div class="container">OC level: <%= @user.pouch.oclevel %>/<%= getUpgradeMax("OC") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("OC", @user.pouch).to_s, pouches_buy3_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
+      <br>
+      <div class="container">Blog level: <%= @user.pouch.bloglevel %>/<%= getUpgradeMax("Blog") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("Blog", @user.pouch).to_s, pouches_buy3_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
+      <br>
+      <div class="container">Emerald level: <%= @user.pouch.emeraldlevel %>/<%= getUpgradeMax("Emerald") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("Emerald", @user.pouch).to_s, pouches_buy2_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
+      <br>
+      <div class="container">Dreyterrium level: <%= @user.pouch.dreyterriumlevel %>/<%= getUpgradeMax("Dreyterrium") %></div> <div class="container"><%= button_to 'Buy Upgrade for ' + getUpgradeCost("Dreyterrium", @user.pouch).to_s, pouches_buy4_path(:pouch_id=>@user.pouch.id), method: :post, class: "button submitbutton" %></div>
+      <br>
+   <% end %>
+   <% if current_user && (current_user.id == @user.id) %>
+      <br>
+      <p>Open Inventory</p>
+      <p><%= button_to "Inventory", user_inventory_path(@user, @user.inventory), method: :get, class: "button submitbutton" %></p>
+   <% end %>
    <% if getUserContent(@user, "OCs") != 0 %>
       <br>
       <p>OC section</p>
@@ -166,6 +173,40 @@
       <% end %>
    <% end %>
    <!--Colorscheme thing-->
+   <% if current_user %>
+      <br>
+      <p>Shoutbox section</p>
+      <p><%= button_to 'Review', shouts_review_path(), method: :get, class: "button submitbutton" %></p>
+      <p>Capacity: <%= getUserContent(@user, "Shout") %>/<%= @user.shoutbox.capacity %></p>
+      <p>Box open: <%= @user.shoutbox.box_open %></p>
+      <br>
+      <% getUserContent(@user, "Pageshouts").each do |shout| %>
+         <div class="container"><%= button_to 'Destroy', [shout.shoutbox, shout], method: :delete, data: { confirm: 'Are you sure?' }, class: "button editbutton" %></div>
+         <p>Created: <%= distance_of_time_in_words_to_now shout.created_on %> ago on (<%= shout.created_on.strftime("%B-%d-%Y") %>)</p>
+         <% if !shout.reviewed_on.nil? %>
+            <p>Reviewed on: <%= distance_of_time_in_words_to_now shout.reviewed_on %> ago on(<%= shout.reviewed_on.strftime("%B-%d-%Y") %>)</p>
+         <% end %>
+         <% if shout.user.userinfo.miniavatar.to_s != "" %>
+            <p><%= image_tag(shout.user.userinfo.miniavatar_url(:thumb)) %></p>
+         <% end %>
+         <p class="formlinks">Owner: <%= getUserPrivilege(shout.user) %><%= link_to shout.user.vname, user_path(shout.user) %></p>
+         <p>Status: <%= getActivity(shout.user) %>
+            <% if getActivity(shout.user) != "Online" && getActivity(shout.user) != "Inoperable" %>
+               for <%= distance_of_time_in_words_to_now getTime(shout.user) %>
+            <% end %>
+         </p>
+         <br>
+         <p>Message: <%= textFormater("Multi", shout.message, "All").html_safe %></p>
+      <% end %>
+
+      <% if current_user.id != @user.id %>
+         <%= form_for [@user.shoutbox, Shout.new] do |form| %>
+            <p><%= form.label :message %></p>
+            <p><%= form.text_area :message, :placeholder => "Enter message" %></p>
+            <p><%= form.submit %></p>
+         <% end %>
+      <% end %>
+   <% end %>
 </div>
 <br>
 <p class="formlinks"><%= link_to 'Back', root_path %></p>

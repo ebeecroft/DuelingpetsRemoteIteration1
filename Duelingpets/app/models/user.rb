@@ -4,10 +4,13 @@ class User < ApplicationRecord
    has_one :pouch, :foreign_key => "user_id", :dependent => :destroy
    has_one :userinfo, :foreign_key => "user_id", :dependent => :destroy
    has_one :gameinfo, :foreign_key => "user_id", :dependent => :destroy
+   has_one :shoutbox, :foreign_key => "user_id", :dependent => :destroy
+   has_one :inventory, :foreign_key => "user_id", :dependent => :destroy
    has_many :blogs, :foreign_key => "user_id", :dependent => :destroy
    has_many :economies, :foreign_key => "user_id", :dependent => :destroy
    has_many :suspendedtimelimits, :foreign_key => "user_id", :dependent => :destroy
    has_many :ocs, :foreign_key => "user_id", :dependent => :destroy
+   has_many :shouts, :foreign_key => "user_id", :dependent => :destroy
 
    #Regex code for managing the user section
    VALID_NAME_REGEX = /\A[a-z][a-z][a-z0-9]+\z/i

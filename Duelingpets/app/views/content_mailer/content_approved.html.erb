@@ -8,6 +8,8 @@
          <h1>Your new blog <%= @content.title %> was approved!</h1>
       <% elsif @type == "OC" %>
          <h1>Your new oc <%= @content.name %> was approved!</h1>
+      <% elsif @type == "Item" %>
+         <h1>Your new item <%= @content.name %> was approved!</h1>
       <% end %>
       <p>
          Our review team has taken the time to do look over
@@ -28,6 +30,10 @@
             the character itself. The image of the character
             itself looks really cool and looks like you put in a
             lot of effort in its design.
+         <% elsif @type == "Item" %>
+            item itself has a lot of interesting looking stats,
+            it feels like it is pretty balanced. The image of
+            the item itself looks really good.
          <% end %>
          In recognition of your effort we have decided
          to add these <%= @points %> points to your account.

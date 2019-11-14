@@ -8,6 +8,8 @@
          <h1>Your new blog <%= @content.title %> was denied!</h1>
       <% elsif @type == "OC" %>
          <h1>Your new oc <%= @content.name %> was denied!</h1>
+      <% elsif @type == "Item" %>
+         <h1>Your new item <%= @content.name %> was denied!</h1>
       <% end %>
       <p>
          Our review team has taken the time to do look over
@@ -24,6 +26,13 @@
             for the age group it is targeted for. The content
             may need to be changed just a tad before it can
             be approved.
+         <% elsif @type == "Item" %>
+            The image of this item may not be suitable for our
+            community. Though there is still the possibility
+            that the stats for the item may be too
+            overpowered, or the item costs too much. The
+            content may need to be changed just a tad before
+            it can be approved.
          <% end %>
          Our review team will get in touch with you to go
          over the specifics. Do not worry these things

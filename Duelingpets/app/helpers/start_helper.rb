@@ -5,6 +5,8 @@ module StartHelper
          value = ""
          if(type == "User")
             value = (currentTime - content.joined_on)
+         elsif(type != "User")
+            value = (currentTime - content.created_on)
          end
          return value
       end
@@ -12,43 +14,352 @@ module StartHelper
       def getStatsTimeframe(type, timeframe)
          allContents = ""
          firstContent = ""
-         nonBot = ""   
 
          if(type == "User")
             allContents = User.all
-            firstContent = User.first.joined_on.year
-            nonBot = allContents.select{|content| ((content.pouch.privilege != "Bot") && (content.pouch.privilege != "Trial")) && (content.pouch.privilege != "Admin")}
+            if(allContents.count != 0)
+               firstContent = User.first.joined_on.year
+            end
+         elsif(type == "OC")
+            allContents = Oc.all
+            if(allContents.count != 0)
+               firstContent = Oc.first.created_on.year
+            end
+         elsif(type == "Item")
+            allContents = Item.all
+            if(allContents.count != 0)
+               firstContent = Item.first.created_on.year
+            end
+         elsif(type == "Register")
+            allContents = Registration.all
+            if(allContents.count != 0)
+               firstContent = Registration.first.registered_on.year
+            end
+         elsif(type == "Referral")
+            #allContents = Referral.all
+            #if(allContents.count != 0)
+               #firstContent = Referral.first.created_on.year
+            #end
+         elsif(type == "Friend")
+            #allContents = Friend.all
+            #if(allContents.count != 0)
+               #firstContent = Friend.first.created_on.year
+            #end
+         elsif(type == "Colorscheme")
+            allContents = Colorscheme.all
+            if(allContents.count != 0)
+               firstContent = Colorscheme.first.created_on.year
+            end
+         elsif(type == "Gallery")
+            #allContents = Gallery.all
+            #if(allContents.count != 0)
+               #firstContent = Gallery.first.created_on.year
+            #end
+         elsif(type == "Mainfolder")
+            #allContents = Mainfolder.all
+            #if(allContents.count != 0)
+               #firstContent = Mainfolder.first.created_on.year
+            #end
+         elsif(type == "Subfolder")
+            #allContents = Subfolder.all
+            #if(allContents.count != 0)
+               #firstContent = Subfolder.first.created_on.year
+            #end
+         elsif(type == "Art")
+            #allContents = Art.all
+            #if(allContents.count != 0)
+               #firstContent = Art.first.created_on.year
+            #end
+         elsif(type == "Radio")
+            #allContents = Radiostation.all
+            #if(allContents.count != 0)
+               #firstContent = Radiostation.first.created_on.year
+            #end
+         elsif(type == "Mainsheet")
+            #allContents = Mainsheet.all
+            #if(allContents.count != 0)
+               #firstContent = Mainsheet.first.created_on.year
+            #end
+         elsif(type == "Subsheet")
+            #allContents = Subfolder.all
+            #if(allContents.count != 0)
+               #firstContent = Subfolder.first.created_on.year
+            #end
+         elsif(type == "Sound")
+            #allContents = Sound.all
+            #if(allContents.count != 0)
+               #firstContent = Sound.first.created_on.year
+            #end
+         elsif(type == "Channel")
+            #allContents = Channel.all
+            #if(allContents.count != 0)
+               #firstContent = Channel.first.created_on.year
+            #end
+         elsif(type == "Mainplaylist")
+            #allContents = Mainplaylist.all
+            #if(allContents.count != 0)
+               #firstContent = Mainplaylist.first.created_on.year
+            #end
+         elsif(type == "Subplaylist")
+            #allContents = Subplaylist.all
+            #if(allContents.count != 0)
+               #firstContent = Subplaylist.first.created_on.year
+            #end
+         elsif(type == "Movie")
+            #allContents = Movie.all
+            #if(allContents.count != 0)
+               #firstContent = Movie.first.created_on.year
+            #end
+         elsif(type == "Blog")
+            allContents = Blog.all
+            if(allContents.count != 0)
+               firstContent = Blog.first.created_on.year
+            end
+         elsif(type == "Forum")
+            #allContents = Forum.all
+            #if(allContents.count != 0)
+               #firstContent = Forum.first.created_on.year
+            #end
+         elsif(type == "Container")
+            #allContents = Topiccontainer.all
+            #if(allContents.count != 0)
+               #firstContent = Topiccontainer.first.created_on.year
+            #end
+         elsif(type == "Maintopic")
+            #allContents = Maintopic.all
+            #if(allContents.count != 0)
+               #firstContent = Maintopic.first.created_on.year
+            #end
+         elsif(type == "Subtopic")
+            #allContents = Subtopic.all
+            #if(allContents.count != 0)
+               #firstContent = Subtopic.first.created_on.year
+            #end
+         elsif(type == "Narrative")
+            #allContents = Narrative.all
+            #if(allContents.count != 0)
+               #firstContent = Narrative.first.created_on.year
+            #end
+         elsif(type == "Reply")
+            #allContents = Reply.all
+            #if(allContents.count != 0)
+               #firstContent = Reply.first.created_on.year
+            #end
+         elsif(type == "Soundcritique")
+            #allContents = Soundcomment.all
+            #if(allContents.count != 0)
+               #firstContent = Soundcomment.first.created_on.year
+            #end
+         elsif(type == "Soundcomment")
+            #allContents = Soundcomment.all
+            #if(allContents.count != 0)
+               #firstContent = Soundcomment.first.created_on.year
+            #end
+         elsif(type == "Artcritique")
+            #allContents = Artcomment.all
+            #if(allContents.count != 0)
+               #firstContent = Artcomment.first.created_on.year
+            #end
+         elsif(type == "Artcomment")
+            #allContents = Artcomment.all
+            #if(allContents.count != 0)
+               #firstContent = Artcomment.first.created_on.year
+            #end
+         elsif(type == "Moviecritique")
+            #allContents = Moviecomment.all
+            #if(allContents.count != 0)
+               #firstContent = Moviecomment.first.created_on.year
+            #end
+         elsif(type == "Moviecomment")
+            #allContents = Moviecomment.all
+            #if(allContents.count != 0)
+               #firstContent = Moviecomment.first.created_on.year
+            #end
+         elsif(type == "Shout")
+            allContents = Shout.all
+            if(allContents.count != 0)
+               firstContent = Shout.first.created_on.year
+            end
+         elsif(type == "Favoritesound")
+            #allContents = Favoritesound.all
+            #if(allContents.count != 0)
+               #firstContent = Favoritesound.first.created_on.year
+            #end
+         elsif(type == "Soundstar")
+            #allContents = Soundstar.all
+            #if(allContents.count != 0)
+               #firstContent = Soundstar.first.created_on.year
+            #end
+         elsif(type == "Favoriteart")
+            #allContents = Favoriteart.all
+            #if(allContents.count != 0)
+               #firstContent = Favoriteart.first.created_on.year
+            #end
+         elsif(type == "Artstar")
+            #allContents = Artstar.all
+            #if(allContents.count != 0)
+               #firstContent = Artstar.first.created_on.year
+            #end
+         elsif(type == "Favoritemovie")
+            #allContents = Favoritemovie.all
+            #if(allContents.count != 0)
+               #firstContent = Favoritemovie.first.created_on.year
+            #end
+         elsif(type == "Moviestar")
+            #allContents = Moviestar.all
+            #if(allContents.count != 0)
+               #firstContent = Moviestar.first.created_on.year
+            #end
+         elsif(type == "Blogstar")
+            #allContents = Blogstar.all
+            #if(allContents.count != 0)
+               #firstContent = Blogstar.first.created_on.year
+            #end
+         elsif(type == "Watcher")
+            #allContents = Watch.all
+            #if(allContents.count != 0)
+               #firstContent = Watch.first.created_on.year
+            #end
+         elsif(type == "Containersub")
+            #allContents = Containersub.all
+            #if(allContents.count != 0)
+               #firstContent = Containersub.first.created_on.year
+            #end
+         elsif(type == "Maintopicsub")
+            #allContents = Maintopicsub.all
+            #if(allContents.count != 0)
+               #firstContent = Maintopicsub.first.created_on.year
+            #end
+         elsif(type == "Subtopicsub")
+            #allContents = Subtopicsub.all
+            #if(allContents.count != 0)
+               #firstContent = Subtopicsub.first.created_on.year
+            #end
+         elsif(type == "Forummod")
+            #allContents = Forummod.all
+            #if(allContents.count != 0)
+               #firstContent = Forummod.first.created_on.year
+            #end
+         elsif(type == "Containermod")
+            #allContents = Containermod.all
+            #if(allContents.count != 0)
+               #firstContent = Containermod.first.created_on.year
+            #end
+         elsif(type == "Maintopicmod")
+            #allContents = Maintopicmod.all
+            #if(allContents.count != 0)
+               #firstContent = Maintopicmod.first.created_on.year
+            #end
+         elsif(type == "Forummember")
+            #allContents = Forummember.all
+            #if(allContents.count != 0)
+               #firstContent = Forummember.first.created_on.year
+            #end
          end
 
-         #Finds all the content created on a specific day
-         day = nonBot.select{|content| getTimeDifference(type, content) <= 1.day}
-         week = nonBot.select{|content| getTimeDifference(type, content) <= 1.week}
-         month = nonBot.select{|content| getTimeDifference(type, content) <= 1.month}
-         year = nonBot.select{|content| getTimeDifference(type, content) <= 1.year}
-         threeyear = nonBot.select{|content| getTimeDifference(type, content) <= 3.years}
-         bacot = nonBot.select{|content| getTimeDifference(type, content) > (firstContent - 1.year)}
+         total = 0
+         if(firstContent.to_s != "")
+            #Determine if the contents is not bot related
+            if(type != "User")
+               nonBot = allContents.select{|content| ((content.user.pouch.privilege != "Bot") && (content.user.pouch.privilege != "Trial")) && ((content.user.pouch.privilege != "Admin") && (content.user.pouch.privilege != "Glitchy"))}
+            else
+               nonBot = allContents.select{|content| ((content.pouch.privilege != "Bot") && (content.pouch.privilege != "Trial")) && ((content.pouch.privilege != "Admin") && (content.pouch.privilege != "Glitchy"))}
+            end
 
-         #Sums up the data for the particular timeframe
-         dayCount = day.count
-         weekCount = week.count - dayCount
-         monthCount = month.count - weekCount - dayCount
-         yearCount = year.count - monthCount - weekCount - dayCount
-         dreiJahreCount = threeyear.count - yearCount - monthCount - weekCount - dayCount
-         bacotCount = bacot.count - dreiJahreCount - yearCount - monthCount - weekCount - dayCount
+            #Finds all the content created on a specific day
+            day = nonBot.select{|content| getTimeDifference(type, content) <= 1.day}
+            week = nonBot.select{|content| getTimeDifference(type, content) <= 1.week}
+            month = nonBot.select{|content| getTimeDifference(type, content) <= 1.month}
+            year = nonBot.select{|content| getTimeDifference(type, content) <= 1.year}
+            threeyear = nonBot.select{|content| getTimeDifference(type, content) <= 3.years}
+            bacot = nonBot.select{|content| getTimeDifference(type, content) > (firstContent - 1.year)}
 
-         total = dayCount
-         if(timeframe == "Week")
-            total = weekCount
-         elsif(timeframe == "Month")
-            total = monthCount
-         elsif(timeframe == "Year")
-            total = yearCount
-         elsif(timeframe == "Threeyears")
-            total = dreiJahreCount
-         elsif(timeframe == "BaconOfTomato")
-            total = bacotCount
-         elsif(timeframe == "All")
-            total = nonBot.count
+            #Sums up the data for the particular timeframe
+            dayCount = day.count
+            weekCount = week.count - dayCount
+            monthCount = month.count - weekCount - dayCount
+            yearCount = year.count - monthCount - weekCount - dayCount
+            dreiJahreCount = threeyear.count - yearCount - monthCount - weekCount - dayCount
+            bacotCount = bacot.count - dreiJahreCount - yearCount - monthCount - weekCount - dayCount
+
+            total = dayCount
+            if(timeframe == "Week")
+               total = weekCount
+            elsif(timeframe == "Month")
+               total = monthCount
+            elsif(timeframe == "Year")
+               total = yearCount
+            elsif(timeframe == "Threeyears")
+               total = dreiJahreCount
+            elsif(timeframe == "BaconOfTomato")
+               total = bacotCount
+            elsif(timeframe == "All")
+               total = nonBot.count
+            end
+         end
+         return total
+      end
+
+      def getStatDifference(type, visit)
+         value = (currentTime - visit.created_on)
+         return value
+      end
+
+      def getVisitStats(type, timeframe)
+         allVisits = ""
+         if(type == "User")
+            #allVisits = Uservisit.all
+         elsif(type == "Radio")
+            #allVisits = Radiovisit.all
+         elsif(type == "Sound")
+            #allVisits = Soundvisit.all
+         elsif(type == "Gallery")
+            #allVisits = Galleryvisit.all
+         elsif(type == "Art")
+            #allVisits = Artvisit.all
+         elsif(type == "Channel")
+            #allVisits = Channelvisit.all
+         elsif(type == "Movie")
+            #allVisits = Movievisit.all
+         elsif(type == "Blog")
+            #allVisits = Blogvisit.all
+         elsif(type == "OC")
+            #allVisits = Ocvisit.all
+         elsif(type == "Item")
+            #allVisits = Itemvisit.all
+         end
+
+         total = 0
+         if(allVisits.to_s != "")
+            #Determine if the visits is not bot related
+            nonBot = allVisits.select{|visit| ((visit.from_user.pouch.privilege != "Bot") && (visit.from_user.pouch.privilege != "Trial")) && ((visit.from_user.pouch.privilege != "Admin") && (visit.from_user.pouch.privilege != "Glitchy"))}
+
+            #Finds all the visit created on a specific time
+            twenty = nonBot.select{|visit| getStatDifference(type, visit) <= 20.minutes}
+            fourty = nonBot.select{|visit| getStatDifference(type, visit) <= 40.minutes}
+            sixty = nonBot.select{|visit| getStatDifference(type, visit) <= 1.hour}
+            twohours = nonBot.select{|visit| getStatDifference(type, visit) <= 2.hours}
+            threehours = nonBot.select{|visit| getStatDifference(type, visit) <= 3.hours}
+
+            #Sums up the data for the particular timeframe
+            twentyCount = twenty.count
+            fourtyCount = fourty.count - twentyCount
+            sixtyCount = sixty.count - fourtyCount - twentyCount
+            twohoursCount = twohours.count - sixtyCount - fourtyCount - twentyCount
+            threehoursCount = threehours.count - twohoursCount - sixtyCount - fourtyCount - twentyCount
+
+            total = twentyCount
+            if(timeframe == "Fourty")
+               total = fourtyCount
+            elsif(timeframe == "Sixty")
+               total = sixtyCount
+            elsif(timeframe == "Twohours")
+               total = twohoursCount
+            elsif(timeframe == "Threehours")
+               total = threehoursCount
+            elsif(timeframe == "All")
+               total = nonBot.count
+            end
          end
          return total
       end

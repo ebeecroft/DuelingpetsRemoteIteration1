@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_24_135057) do
+ActiveRecord::Schema.define(version: 2019_11_06_040905) do
 
   create_table "accounttypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 2019_08_24_135057) do
     t.string "mp3"
     t.float "taxbase", limit: 53
     t.float "taxinc", limit: 53
+    t.integer "ocpoints"
     t.integer "colorschemepoints"
     t.integer "colorschemecleanup"
     t.integer "treasury", default: 0
@@ -218,6 +219,48 @@ ActiveRecord::Schema.define(version: 2019_08_24_135057) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "inventories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "itemart"
+    t.integer "hp"
+    t.integer "atk"
+    t.integer "def"
+    t.integer "spd"
+    t.integer "fun"
+    t.integer "hunger"
+    t.integer "knowledge"
+    t.integer "durability"
+    t.integer "rarity"
+    t.boolean "starter"
+    t.boolean "equipable"
+    t.integer "cost"
+    t.datetime "created_on"
+    t.datetime "reviewed_on"
+    t.datetime "updated_on"
+    t.integer "user_id"
+    t.integer "itemtype_id"
+    t.boolean "reviewed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "itemtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_on"
+    t.integer "basecost"
+    t.integer "dreyterriumcost"
+    t.boolean "demoitem", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "maintenancemodes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_on"
@@ -254,6 +297,7 @@ ActiveRecord::Schema.define(version: 2019_08_24_135057) do
     t.datetime "updated_on"
     t.datetime "reviewed_on"
     t.boolean "reviewed", default: false
+    t.boolean "pointsreceived", default: false
     t.integer "user_id"
     t.integer "bookgroup_id"
     t.datetime "created_at", null: false
@@ -299,6 +343,25 @@ ActiveRecord::Schema.define(version: 2019_08_24_135057) do
     t.string "login_id"
     t.string "vname"
     t.datetime "registered_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shoutboxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "capacity"
+    t.boolean "box_open", default: false
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shouts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "message"
+    t.datetime "created_on"
+    t.datetime "reviewed_on"
+    t.integer "user_id"
+    t.integer "shoutbox_id"
+    t.boolean "reviewed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

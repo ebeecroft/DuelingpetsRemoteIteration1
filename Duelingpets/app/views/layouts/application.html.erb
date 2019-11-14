@@ -7,6 +7,7 @@
       <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
       <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
       <%= favicon_link_tag displayType("Favicon") %>
+      <meta name="viewport" content="width=device-width,initial-scale=1">
    </head>
    <body id="pagestyle">
       <!--CSS Code section-->
@@ -15,12 +16,12 @@
         p pre{ font-family: 'Verdana', 'Arial', 'sans-serif'}
         #pagestyle{background-color: <%= getColorAttribute("Backgroundcolor") %>; font-family: 'Georgia', 'Arial', 'sans-serif'; max-width: 100%; margin:0;}
         #banner{width: 100%; height: 90px;}
-
         /* Handles the user alert features */
         .profile{padding: 0.7% 1%; text-align: right; color:<%= getColorAttribute("Profile") %>}
         .profile a{color:<%= getColorAttribute("Profile") %>}
         .profile a:visited{<%= getColorAttribute("Profilevisited") %>}
         .profile a:hover{color: <%= getColorAttribute("Profilehovercolor") %>; background: <%= getColorAttribute("Profilehoverbackgc") %>}
+        
         #sessionindent{padding: 0% 3%;color:<%= getColorAttribute("Sessionc") %>; font-family: 'Courier New', 'monospace'}
         /* End of user alert features */
 
@@ -29,8 +30,19 @@
         .navindent a{color: <%= getColorAttribute("Navigationlink") %>}
         .navindent a:hover{color: <%= getColorAttribute("Navigationhoverforc") %>;background: <%= getColorAttribute("Navigationhoverbackgc") %>}
         #activity{font-weight: bold; font-size: 120%; padding: 1.5% 0%; color: <%= getColorAttribute("Onlinestatus") %>; font-family: 'Courier New', 'monospace'}
+
         .navigation{display: inline-block; font-weight: bold; font-size: 120%; padding: 1.5% 0.3%; font-family: 'Courier New', 'monospace'}
         /* End of main navigation features */
+
+        @media screen and (max-width: 640px)
+        {
+          .profile a{font-size: 140%}
+          .navindent{font-size: 120%; font-weight: bold; background: <%= getColorAttribute("Navigation") %>; text-align: center;}
+          .navindent a{font-weight: bold; font-size: 120%; color: <%= getColorAttribute("Navigationlink") %>;}
+          .navindent a:hover{color: <%= getColorAttribute("Navigationhoverforc") %>;background: <%= getColorAttribute("Navigationhoverbackgc") %>}
+          #activity{padding: 3.5% 0%; color: <%= getColorAttribute("Onlinestatus") %>}
+          .navigation{display: inline-block; padding: 3.5% 0.3%; font-family: 'Courier New', 'monospace';}
+        }
 
         /* Handles the indentation of the alert features */
         #pageindent{padding: 0% 3%;}
@@ -106,7 +118,7 @@
 
       <!--User Activity section-->
       <div class="navindent">
-         <h2 id="activity">Online: <%= getUserStatus("Online") %> Inactive: <%= getUserStatus("Inactive") %> Offline: <%= getUserStatus("Offline") %> Gone: <%= getUserStatus("Gone") %></h2>
+         <div id="activity">Online: <%= getUserStatus("Online") %> Inactive: <%= getUserStatus("Inactive") %> Offline: <%= getUserStatus("Offline") %> Gone: <%= getUserStatus("Gone") %></div>
       </div>
       <br>
       <!--End of User Activity section-->

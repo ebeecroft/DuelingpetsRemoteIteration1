@@ -143,6 +143,7 @@ module OcsHelper
                         if(type == "create")
                            newOc = logged_in.ocs.new(getOcParams("Oc"))
                            newOc.created_on = currentTime
+                           newOc.updated_on = currentTime
                         end
                         #Determines the type of bookgroup the user belongs to
                         allGroups = Bookgroup.order("created_on desc")
@@ -236,12 +237,10 @@ module OcsHelper
                         if(type == "approve")
                            ocFound.reviewed = true
                            ocFound.reviewed_on = currentTime
-                           #hoard = Dragonhoard.find_by_id(1)
-                           #pointsForOcs = hoard.colorschemepoints
+                           hoard = Dragonhoard.find_by_id(1)
+                           pointsForOcs = hoard.ocpoints
                            @oc = ocFound
                            @oc.save
-
-                           pointsForOC = 20
                            pouch = Pouch.find_by_user_id(@oc.user_id)
                            pouch.amount += pointsForOC
                            @pouch = pouch

@@ -2,6 +2,8 @@
    Your new blog <%= @content.title %> was denied!
 <% elsif @type == "OC" %>
    Your new oc <%= @content.name %> was denied!
+<% elsif @type == "Item" %>
+   Your new item <%= @content.name %> was denied!
 <% end %>
 ===============================================
  
@@ -19,6 +21,13 @@ that it doesn't fit into the correct book group.
    for the age group it is targeted for. The content
    may need to be changed just a tad before it can
    be approved.
+<% elsif @type == "Item" %>
+   The image of this item may not be suitable for our
+   community. Though there is still the possibility
+   that the stats for the item may be too
+   overpowered, or the item costs too much. The
+   content may need to be changed just a tad before
+   it can be approved.
 <% end %>
 Our review team will get in touch with you to go
 over the specifics. Do not worry these things

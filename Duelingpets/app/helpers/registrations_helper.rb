@@ -141,6 +141,19 @@ module RegistrationsHelper
          newPouch.remember_token = SecureRandom.urlsafe_base64
          newPouch.amount = starterPoints
 
+         #Build shoutbox
+         newBox = Shoutbox.new(params[:shoutbox])
+         newBox.user_id = @user.id
+         newBox.capacity = 600
+         @shoutbox = newBox
+         @shoutbox.save
+
+         #Build inventory
+         newInventory = Inventory.new(params[:inventory])
+         newInventory.user_id = @user.id
+         @inventory = newInventory
+         @inventory.save
+
          #Remove some Dreyterrium to give to the user
          hoard = Dragonhoard.find_by_id(1)
          newDreyterrium = hoard.dreyterrium_start - 10
@@ -197,7 +210,7 @@ module RegistrationsHelper
          else
             if(type == "index")
                logged_in = current_user
-               if(logged_in && logged_in.pouch.privilege == "Admin" || logged_in.pouch.privilege == "Keymaster")
+               if(logged_in && ((logged_in.pouch.privilege == "Admin") || (logged_in.pouch.privilege == "Keymaster")))
                   removeTransactions
                   allRegistrations = Registration.order("registered_on desc").page(params[:page]).per(10)
                   @registrations = allRegistrations

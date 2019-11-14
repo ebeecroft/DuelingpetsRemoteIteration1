@@ -2,6 +2,8 @@
    Your new blog <%= @content.title %> was approved!
 <% elsif @type == "OC" %>
    Your new oc <%= @content.name %> was approved!
+<% elsif @type == "Item" %>
+   Your new item <%= @content.name %> was approved!
 <% end %>
 ===============================================
 
@@ -23,6 +25,10 @@ that it fits into the correct book group. The
    the character itself. The image of the character
    itself looks really cool and looks like you put in a
    lot of effort in its design.
+<% elsif @type == "Item" %>
+   item itself has a lot of interesting looking stats,
+   it feels like it is pretty balanced. The image of
+   the item itself looks really good.
 <% end %>
 In recognition of your effort we have decided
 to add these <%= @points %> points to your account.

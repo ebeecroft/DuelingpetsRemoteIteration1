@@ -8,6 +8,7 @@ class CreateDragonhoards < ActiveRecord::Migration[5.2]
       t.string :mp3
       t.float :taxbase, limit: 53
       t.float :taxinc, limit: 53
+      t.integer :ocpoints
       t.integer :colorschemepoints
       t.integer :colorschemecleanup
       t.integer :treasury, default: 0

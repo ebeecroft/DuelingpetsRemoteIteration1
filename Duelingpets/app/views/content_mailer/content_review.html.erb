@@ -8,6 +8,8 @@
          <h1><%= @content.user.vname %>'s new blog <%= @content.title %> is awaiting your review!</h1>
       <% elsif @type == "OC" %>
          <h1><%= @content.user.vname %>'s new oc <%= @content.name %> is awaiting your review!</h1>
+      <% elsif @type == "Item" %>
+         <h1><%= @content.user.vname %>'s new item <%= @content.name %> is awaiting your review!</h1>
       <% end %>
       <p>
          <% if @type == "Blog" %>
@@ -18,6 +20,10 @@
             Greetings my review team we have an artist by the name
             of <%= @content.user.vname %> who is building some new
             ocs for the site.
+         <% elsif @type == "Item" %>
+            Greetings my review team we have an artist by the name
+            of <%= @content.user.vname %> who is building some new
+            items for the site.
          <% end %>
          So I gathered you all together to have a look at his
          newest submission to see if it fits within our
@@ -32,6 +38,10 @@
             addition to the standard image and text content found
             on most ocs. As such I like you to look this content
             over.
+         <% elsif @type == "Item" %>
+            This item has a variety of different stats that might
+            be included with the standard image. As such I like
+            you to look this content over.
          <% end %>
          Be sure to check to see if this content does indeed fit
          the book group that it has been assigned to. Please give
@@ -53,6 +63,9 @@
             or has them removed from their account.
          <% elsif @type == "OC" %>
             Now if you approve the oc then the user gets points
+            added to their account.
+         <% elsif @type == "Item" %>
+            Now if you approve the item then the user gets points
             added to their account.
          <% end %>
          If you deny the content please get in touch with the

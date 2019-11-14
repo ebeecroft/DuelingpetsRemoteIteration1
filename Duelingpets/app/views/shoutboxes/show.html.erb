@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Capacity:</strong>
+  <%= @shoutbox.capacity %>
+</p>
+
+<p>
+  <strong>Box open:</strong>
+  <%= @shoutbox.box_open %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @shoutbox.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_shoutbox_path(@shoutbox) %> |
+<%= link_to 'Back', shoutboxes_path %>

@@ -24,13 +24,21 @@ module UsersHelper
                reviewedBlogs = normalBlogs
             end
             value = reviewedBlogs.count
-         elsif(type == "Activatedcolors" || "Inactivecolors")
+         elsif(type == "Activatedcolors" || type == "Inactivecolors")
             allUserColors = user.colorschemes.all
             activatedColors = allUserColors.select{|colorscheme| colorscheme.activated}
             if(type == "Inactivecolors")
                activatedColors = allUserColors.select{|colorscheme| !colorscheme.activated}
             end
             value = activatedColors.count
+         elsif(type == "Shout" || type == "Pageshouts")
+            allShouts = user.shoutbox.shouts.order("created_on desc")
+            reviewedShouts = allShouts.select{|shout| shout.reviewed}
+            value = reviewedShouts.count
+            if(type == "Pageshouts")
+              @shouts = Kaminari.paginate_array(reviewedShouts).page(params[:page]).per(10)
+              value = @shouts
+            end
          end
          return value
       end

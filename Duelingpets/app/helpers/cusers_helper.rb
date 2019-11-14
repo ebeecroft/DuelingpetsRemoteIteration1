@@ -105,7 +105,7 @@ module CusersHelper
                raise "Invalid browser setting detected! Please choose mp3 or ogg"
             end
          end
-         return sound
+         #return sound
       end
 
       def getUserPrivilege(user)
@@ -181,10 +181,16 @@ module CusersHelper
             allContents = Book.order("created_on desc")
          elsif(type == "OC")
             allContents = Oc.order("created_on desc")
+         elsif(type == "Item")
+            allContents = Item.order("created_on desc")
          else
             raise "Invalid content type detected!"
          end
-         reviewedContents = allContents.select{|content| content.reviewed && checkBookgroupStatus(content)}
+         if(type != "Item")
+            reviewedContents = allContents.select{|content| content.reviewed && checkBookgroupStatus(content)}
+         else
+            reviewedContents = allContents.select{|content| content.reviewed}
+         end
          contents = reviewedContents.take(3)
          return contents
       end

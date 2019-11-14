@@ -28,6 +28,7 @@ class CreateOcs < ActiveRecord::Migration[5.2]
       t.datetime :updated_on
       t.datetime :reviewed_on
       t.boolean :reviewed, default: false
+      t.boolean :pointsreceived, default: false
       t.integer :user_id
       t.integer :bookgroup_id
 
