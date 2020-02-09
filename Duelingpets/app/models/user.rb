@@ -1,16 +1,31 @@
 class User < ApplicationRecord
    has_many :colorschemes, :foreign_key => "user_id", :dependent => :destroy
+   has_one :inventory, :foreign_key => "user_id", :dependent => :destroy
+   has_many :blogs, :foreign_key => "user_id", :dependent => :destroy
+   has_many :ocs, :foreign_key => "user_id", :dependent => :destroy
+   has_many :creatures, :foreign_key => "user_id", :dependent => :destroy
+   has_many :items, :foreign_key => "user_id", :dependent => :destroy
+
+   #Relationships for user information
    has_one :accounttype, :foreign_key => "user_id", :dependent => :destroy
    has_one :pouch, :foreign_key => "user_id", :dependent => :destroy
    has_one :userinfo, :foreign_key => "user_id", :dependent => :destroy
    has_one :gameinfo, :foreign_key => "user_id", :dependent => :destroy
-   has_one :shoutbox, :foreign_key => "user_id", :dependent => :destroy
-   has_one :inventory, :foreign_key => "user_id", :dependent => :destroy
-   has_many :blogs, :foreign_key => "user_id", :dependent => :destroy
    has_many :economies, :foreign_key => "user_id", :dependent => :destroy
    has_many :suspendedtimelimits, :foreign_key => "user_id", :dependent => :destroy
-   has_many :ocs, :foreign_key => "user_id", :dependent => :destroy
+
+   #Relationships for communication
+   has_one :shoutbox, :foreign_key => "user_id", :dependent => :destroy
    has_many :shouts, :foreign_key => "user_id", :dependent => :destroy
+   has_one :pmbox, :foreign_key => "user_id", :dependent => :destroy
+   has_many :pms, :foreign_key => "user_id", :dependent => :destroy
+   has_many :pmreplies, :foreign_key => "user_id", :dependent => :destroy
+
+   #Relationships for music content
+   has_many :jukeboxes, :foreign_key => "user_id", :dependent => :destroy
+   has_many :mainsheets, :foreign_key => "user_id", :dependent => :destroy
+   has_many :subsheets, :foreign_key => "user_id", :dependent => :destroy
+   has_many :sounds, :foreign_key => "user_id", :dependent => :destroy
 
    #Regex code for managing the user section
    VALID_NAME_REGEX = /\A[a-z][a-z][a-z0-9]+\z/i

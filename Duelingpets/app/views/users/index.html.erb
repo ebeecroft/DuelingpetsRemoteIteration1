@@ -4,8 +4,8 @@
    <br>
 <% end %>
 <% @users.each do |user| %>
-   <div class="pageformat"><div class="container"><p class="formlinks">Vname: <%= link_to user.vname, user %></p></div> <div class="container"><%= button_to 'Edit', edit_user_path(user), method: :get %></div> <div class="container"><%= button_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></div></div>
    <div class="pageformat">
+      <div class="container"><p class="formlinks">Vname: <%= link_to user.vname, user_path(user) %></p></div> <div class="container"><%= button_to 'Edit', edit_user_path(user), method: :get, class: "button editbutton" %></div> <div class="container"><%= button_to 'Destroy', user, method: :delete, class: "button destroybutton", data: { confirm: 'Are you sure?' } %></div>
       <p>Name: <%= user.firstname %> <%= user.lastname %></p>
       <p>Joined on: <%= distance_of_time_in_words_to_now user.joined_on %> ago on (<%= user.joined_on.strftime("%B-%d-%Y") %>)</p>
       <p>Registered on: <%= distance_of_time_in_words_to_now user.registered_on %> ago on (<%= user.registered_on.strftime("%B-%d-%Y") %>)</p>

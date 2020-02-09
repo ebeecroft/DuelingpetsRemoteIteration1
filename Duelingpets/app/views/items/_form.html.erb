@@ -39,20 +39,48 @@
     <%= form.number_field :def %>
   </div>
   <div class="pageformat">
-    <%= form.label :spd %>
-    <%= form.number_field :spd %>
+    <%= form.label :agility %>
+    <%= form.number_field :agility %>
   </div>
   <div class="pageformat">
-    <%= form.label :fun %>
-    <%= form.number_field :fun %>
+    <%= form.label :strength %>
+    <%= form.number_field :strength %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :mp %>
+    <%= form.number_field :mp %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :matk %>
+    <%= form.number_field :matk %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :mdef %>
+    <%= form.number_field :mdef %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :magi %>
+    <%= form.number_field :magi %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :mstr %>
+    <%= form.number_field :mstr %>
   </div>
   <div class="pageformat">
     <%= form.label :hunger %>
     <%= form.number_field :hunger %>
   </div>
   <div class="pageformat">
-    <%= form.label :knowledge %>
-    <%= form.number_field :knowledge %>
+    <%= form.label :thirst %>
+    <%= form.number_field :thirst %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :fun %>
+    <%= form.number_field :fun %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :itemworth %>
+    <%= form.number_field :itemworth %>
   </div>
   <div class="pageformat">
     <%= form.label :durability %>
@@ -61,10 +89,6 @@
   <div class="pageformat">
     <%= form.label :rarity %>
     <%= form.number_field :rarity %>
-  </div>
-  <div class="pageformat">
-    <%= form.label :cost %>
-    <%= form.number_field :cost %>
   </div>
   <div class="pageformat">
     <%= form.label :equipable %>
@@ -91,7 +115,7 @@
     <%= form.collection_select(:itemtype_id, @itemtypes, :id, :name) %>
   </div>
   <div class="pageformat">
-    <%= form.submit %>
+    <%= form.submit class: "button submitbutton" %>
   </div>
   <br>
   <p class="formlinks"><%= link_to 'Back', user_path(@item.user) %></p>

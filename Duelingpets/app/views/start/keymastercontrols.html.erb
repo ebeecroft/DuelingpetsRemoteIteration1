@@ -1,7 +1,11 @@
 <% provide(:h1, "Keymastercontrol panel") %>
 <div class="pageformat">
    <p class="formlinks">Registration index: <%= link_to "Registration", registrations_path %></p>
+   <p class="formlinks">Creature review: <%= link_to "Review", creatures_review_path %></p>
+   <p class="formlinks">Item review: <%= link_to "Review", items_review_path %></p>
+   <p class="formlinks">OC review: <%= link_to "Review", ocs_review_path %></p>
    <p class="formlinks">Blog review: <%= link_to "Review", blogs_review_path %></p>
+   <p class="formlinks">Sound review: <%= link_to "Review", sounds_review_path %></p>
    <br>
    <p><%= button_to gateValue, registrations_gate_path, method: :post, class: "button submitbutton" %></p>
    <br>

@@ -112,6 +112,10 @@ module ColorschemeretrievalHelper
                value = default.navlinkhovercolor
             elsif(attribute == "Navlinkhoverbackgc")
                value = default.navlinkhoverbackgcolor
+            elsif(attribute == "Submitbuttoncolor")
+               value = default.submitbuttoncolor
+            elsif(attribute == "Submitbuttonbackgc")
+               value = default.submitbuttonbackgcolor
             end
          end
          return value

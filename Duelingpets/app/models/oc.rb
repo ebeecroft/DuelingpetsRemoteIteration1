@@ -12,8 +12,25 @@ class Oc < ApplicationRecord
 
    #Regex for title
    VALID_TITLE_REGEX = /\A[a-z][a-z][a-z0-9!-]+\z/i
+   VALID_VALUE_REGEX = /\A[0-9]+\z/i
 
    #Validates the blog information upon submission
    validates :name, presence: true, format: {with: VALID_TITLE_REGEX}
+   validates :nickname, presence: true, format: {with: VALID_TITLE_REGEX}
+   validates :species, presence: true, format: {with: VALID_TITLE_REGEX}
+   validates :alignment, presence: true, format: {with: VALID_TITLE_REGEX}
+   validates :age, presence: true, format: {with: VALID_VALUE_REGEX}
    validates :description, presence: true
+   validates :personality, presence: true
+   validates :likesanddislikes, presence: true
+   validates :backgroundandhistory, presence: true
+   validates :relatives, presence: true
+   validates :family, presence: true
+   validates :friends, presence: true
+   validates :world, presence: true
+   validates :alliance, presence: true
+   validates :elements, presence: true
+   validates :appearance, presence: true
+   validates :clothing, presence: true
+   validates :accessories, presence: true
 end

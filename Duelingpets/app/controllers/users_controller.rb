@@ -32,4 +32,12 @@ class UsersController < ApplicationController
    def controlsOn
       mode "controlsOn"
    end
+
+   def disableshoutbox
+      mode "disableshoutbox"
+   end
+
+   def disablepmbox
+      mode "disablepmbox"
+   end
 end

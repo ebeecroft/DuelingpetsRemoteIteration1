@@ -1,5 +1,5 @@
 <% provide(:h1, "OC List") %>
-<% if @ocs.count > 10 %>
+<% if @ocs.count >= 10 %>
    <div class="formlinks"><%= paginate @ocs %></div>
    <br>
 <% end %>

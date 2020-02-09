@@ -10,6 +10,10 @@
          <h1>Your new oc <%= @content.name %> was denied!</h1>
       <% elsif @type == "Item" %>
          <h1>Your new item <%= @content.name %> was denied!</h1>
+      <% elsif @type == "Creature" %>
+         <h1>Your new creature <%= @content.name %> was denied!</h1>
+      <% elsif @type == "Sound" %>
+         <h1>Your new sound <%= @content.title %> was denied!</h1>
       <% end %>
       <p>
          Our review team has taken the time to do look over
@@ -33,6 +37,21 @@
             overpowered, or the item costs too much. The
             content may need to be changed just a tad before
             it can be approved.
+         <% elsif @type == "Creature" %>
+            The image of this creature may not be suitable for our
+            community. Though there is still the possibility
+            that the stats for the creature may be too
+            overpowered, or the creature costs too much. It is
+            also possible the music, or the voice might be not
+            appropriate for the community. The
+            content may need to be changed just a tad before
+            it can be approved.
+         <% elsif @type == "Sound" %>
+            The audio of this sound may not be suitable for our
+            community. It is also possible that the bookgroup
+            was set to the wrong type for this type of audio.
+            The content may need to be changed just a tad
+            before it can be approved.
          <% end %>
          Our review team will get in touch with you to go
          over the specifics. Do not worry these things

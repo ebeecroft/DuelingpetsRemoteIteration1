@@ -9,7 +9,7 @@
       <% end %>
    </div>
 <% end %>
-<% if @dragonhoards.count > 10 %>
+<% if @dragonhoards.count >= 10 %>
    <div class="formlinks"><%= paginate @dragonhoards %></div>
    <br>
 <% end %>
@@ -28,40 +28,41 @@
       <p><%= textFormater("Multi", dragonhoard.message, "All").html_safe %></p>
       <br>
       <% if current_user && (current_user.pouch.privilege == "Admin" || current_user.pouch.privilege == "Glitchy") %>
-         <div class="container">Taxbase: <%= dragonhoard.taxbase %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase1_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease1_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Taxbase: <%= dragonhoard.taxbase %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase1_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease1_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
          <br>
-         <div class="container">Taxinc: <%= dragonhoard.taxinc %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase2_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease2_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
-         <p>Dragon holiday: <%= dragonhoard.denholiday %></p>
-         <div class="container">Profit: <%= dragonhoard.profit %></div> <div class="container"><%= button_to 'Withdraw points', dragonhoards_withdraw_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Taxinc: <%= dragonhoard.taxinc %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase2_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease2_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
+         <br>
+         <div class="container">Contest points cost: <%= dragonhoard.conversioncost %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase5_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease5_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
+         <br>
+         <div class="container">Contest points rate: <%= dragonhoard.pointscreated %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase6_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease6_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
          <br>
          <div class="container">Contest points: <%= dragonhoard.contestpoints %></div> <div class="container"><%= button_to 'Convert points', dragonhoards_convertpoints_path, method: :post, class: "button submitbutton" %></div>
          <br>
-         <div class="container">Contest points cost: <%= dragonhoard.conversioncost %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase5_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease5_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
-         <br>
-         <div class="container">Contest points rate: <%= dragonhoard.pointscreated %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase6_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease6_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Profit: <%= dragonhoard.profit %></div> <div class="container"><%= button_to 'Withdraw points', dragonhoards_withdraw_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
          <p>Treasury: <%= dragonhoard.treasury %></p>
+         <p>Dragon holiday: <%= dragonhoard.denholiday %></p>
          <br>
          <p>Balancing the pages</p>
-         <div class="container">Colorscheme points: <%= dragonhoard.colorschemepoints %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase3_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease3_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Colorscheme points: <%= dragonhoard.colorschemepoints %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase3_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease3_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
          <br>
-         <div class="container">Colorscheme cleanup: <%= dragonhoard.colorschemecleanup %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase4_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease4_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Colorscheme cleanup: <%= dragonhoard.colorschemecleanup %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase4_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease4_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
          <br>
          <!--Blogs here-->
-         <div class="container">Blogbanner cost: <%= dragonhoard.blogadbannercost %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase7_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease7_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Blogbanner cost: <%= dragonhoard.blogadbannercost %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase7_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease7_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
          <br>
-         <div class="container">Bloglargeimage cost: <%= dragonhoard.bloglargeimagecost %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase8_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease8_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Bloglargeimage cost: <%= dragonhoard.bloglargeimagecost %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase8_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease8_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
          <br>
-         <div class="container">Blogsmallimage cost: <%= dragonhoard.blogsmallimagecost %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase9_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease9_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Blogsmallimage cost: <%= dragonhoard.blogsmallimagecost %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase9_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease9_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
          <br>
-         <div class="container">Blogmusic cost: <%= dragonhoard.blogmusiccost %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase10_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease10_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Blogmusic cost: <%= dragonhoard.blogmusiccost %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase10_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease10_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
          <br>
-         <div class="container">Blog points: <%= dragonhoard.blogpoints %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase11_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease11_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Blog points: <%= dragonhoard.blogpoints %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase11_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease11_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
          <br>
-         <div class="container">Blogmascot points: <%= dragonhoard.blogmascotpoints %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase12_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease12_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Blogmascot points: <%= dragonhoard.blogmascotpoints %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase12_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease12_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
          <br>
-         <div class="container">Emerald value: <%= dragonhoard.emeraldvalue %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase13_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease13_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Emerald value: <%= dragonhoard.emeraldvalue %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase13_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease13_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
          <br>
-         <div class="container">Emerald rate: <%= dragonhoard.emeraldrate %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase14_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease14_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></div>
+         <div class="container">Emerald rate: <%= dragonhoard.emeraldrate %></div> <div class="container"><%= button_to 'Increase', dragonhoards_increase14_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Decrease', dragonhoards_decrease14_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button destroybutton" %></div>
          <br>
          <br>
          <p>Dreyterrium</p>
@@ -72,7 +73,6 @@
          <div class="container">New Dreyterrium value: <%= dragonhoard.dreyterriumcurrent_value %></div>
          <p>New Dreyterrium left: <%= getDreyterriumLeft %></p>
          <% if current_user %>
-            <br>
             <br>
             <p><%= button_to 'Buy Emeralds for ' + getEmeraldPrice.to_s, dragonhoards_buyemeralds_path(:dragonhoard_id=>dragonhoard.id), method: :post, class: "button submitbutton" %></p>
          <% end %>

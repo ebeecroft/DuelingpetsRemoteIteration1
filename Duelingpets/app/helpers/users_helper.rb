@@ -39,6 +39,21 @@ module UsersHelper
               @shouts = Kaminari.paginate_array(reviewedShouts).page(params[:page]).per(10)
               value = @shouts
             end
+         elsif(type == "Creatures")
+            allCreatures = user.creatures.order("created_on desc")
+            reviewedCreatures = allCreatures.select{|creature| creature.reviewed}
+            value = reviewedCreatures.count
+         elsif(type == "Items")
+            allItems = user.items.order("created_on desc")
+            reviewedItems = allItems.select{|item| item.reviewed}
+            value = reviewedItems.count
+         elsif(type == "OCs")
+            allOCs = user.ocs.order("created_on desc")
+            reviewedOCs = allOCs.select{|oc| oc.reviewed}
+            value = reviewedOCs.count
+         elsif(type == "Jukeboxes")
+            allJukeboxes = user.jukeboxes.order("created_on desc")
+            value = allJukeboxes.count
          end
          return value
       end
@@ -186,6 +201,28 @@ module UsersHelper
                   else
                      showCommons(type)
                   end
+               end
+            elsif(type == "disableshoutbox" || type == "disablepmbox")
+               userFound = User.find_by_id(params[:id])
+               if(current_user && userFound && current_user.id == userFound.id)
+                  box = userFound.shoutbox
+                  if(type == "disablepmbox")
+                     box = userFound.pmbox
+                  end
+
+                  #Sets the box value for shouts and pms
+                  if(box.box_open)
+                     box.box_open = false
+                  else
+                     box.box_open = true
+                  end
+
+                  #Hopefully this works for both
+                  @box = box
+                  @box.save
+                  redirect_to user_path(@box.user)
+               else
+                  redirect_to root_path
                end
             elsif(type == "music")
                if(current_user && current_user.pouch.privilege == "Admin")

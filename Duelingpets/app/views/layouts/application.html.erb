@@ -101,6 +101,9 @@
             <p><%= getClock %></p>
             <p>Pouch: <%= current_user.pouch.amount %> points</p>
             <p>Emeralds: <%= current_user.pouch.emeraldamount %></p>
+            <p>Notifications: Coming Soon!</p>
+            <br>
+            <p><%= button_to "Active Users", activeusers_path, method: :get, class: "button submitbutton" %></p>
          </div>
          <% if checkforAlerts > 0 %>
             <div class="profile">

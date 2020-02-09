@@ -1,7 +1,7 @@
 class CommunityMailer < ApplicationMailer
 
-   websiteMail = "notification@duelingpets.net"
    def content_starred(content, type, points)
+      websiteMail = "notification@duelingpets.net"
       email = ""
       message = ""
       if(type == "Sound")
@@ -24,6 +24,7 @@ class CommunityMailer < ApplicationMailer
    end
 
    def content_favorited(content, type, points)
+      websiteMail = "notification@duelingpets.net"
       email = ""
       message = ""
       if(type == "Sound")
@@ -43,6 +44,7 @@ class CommunityMailer < ApplicationMailer
    end
 
    def new_posting(content, type, watch)
+      websiteMail = "notification@duelingpets.net"
       email = @watch.from_user.email
       message = ""
       if(type == "Blog")
@@ -63,6 +65,7 @@ class CommunityMailer < ApplicationMailer
    end
 
    def content_critiqued(content, type, points)
+      websiteMail = "notification@duelingpets.net"
       email = ""
       message = ""
       if(type == "Sound")
@@ -85,6 +88,7 @@ class CommunityMailer < ApplicationMailer
    end
 
    def friendship(request, type)
+      websiteMail = "notification@duelingpets.net"
       email = ""
       message = ""
       if(type == "Review")
@@ -103,18 +107,19 @@ class CommunityMailer < ApplicationMailer
    end
 
    def messaging(content, type, url)
+      websiteMail = "notification@duelingpets.net"
       email = ""
       message = ""
-      if(type == "Pm")
-         email = content.to_user.email
-         message = "#{content.from_user.vname} sent you a PM. [Duelingpets]"
-      elsif(type == "Pmreply")
-         if(content.user_id == content.pm.from_user_id)
-            email = content.pm.to_user.email
-         elsif(content.user_id == content.pm.to_user.id)
-            email = content.pm.from_user.email
+      if(type == "PM")
+         email = content.pmbox.user.email
+         message = "#{content.user.vname} sent you a PM. [Duelingpets]"
+      elsif(type == "PMreply")
+         if(content.user_id == content.pm.user_id)
+            email = content.pm.pmbox.user.email
+         elsif(content.user_id == content.pm.pmbox.user.id)
+            email = content.pm.user.email
          end
-         message = "#{content.user.vname} sent you a new PMReply. [Duelingpets]"
+         message = "#{content.user.vname} sent you a new PMreply. [Duelingpets]"
       end
       @type = type
       @content = content
@@ -123,6 +128,7 @@ class CommunityMailer < ApplicationMailer
    end
 
    def goal_reached(box, points, netPoints)
+      websiteMail = "notification@duelingpets.net"
       @donationbox = box
       @points = points
       @netpoints = netpoints

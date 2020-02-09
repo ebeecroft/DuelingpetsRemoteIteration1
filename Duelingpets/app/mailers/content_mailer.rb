@@ -33,6 +33,12 @@ class ContentMailer < ApplicationMailer
       elsif(type == "Item")
          email = content.user.email
          message = "Your item #{content.name} was approved:[Duelingpets]"
+      elsif(type == "Creature")
+         email = content.user.email
+         message = "Your creature #{content.name} was approved:[Duelingpets]"
+      elsif(type == "Sound")
+         email = content.user.email
+         message = "Your sound #{content.title} was approved:[Duelingpets]"
       end
       @type = type
       @content = content
@@ -53,6 +59,12 @@ class ContentMailer < ApplicationMailer
       elsif(type == "Item")
          email = content.user.email
          message = "Your item #{content.name} was denied:[Duelingpets]"
+      elsif(type == "Creature")
+         email = content.user.email
+         message = "Your creature #{content.name} was denied:[Duelingpets]"
+      elsif(type == "Sound")
+         email = content.user.email
+         message = "Your sound #{content.title} was denied:[Duelingpets]"
       end
       @type = type
       @content = content
@@ -67,6 +79,10 @@ class ContentMailer < ApplicationMailer
          message = "New oc #{content.name} is awaiting review:[Duelingpets]"
       elsif(type == "Item")
          message = "New item #{content.name} is awaiting review:[Duelingpets]"
+      elsif(type == "Creature")
+         message = "New creature #{content.name} is awaiting review:[Duelingpets]"
+      elsif(type == "Sound")
+         message = "New sound #{content.title} is awaiting review:[Duelingpets]"
       end
       @type = type
       @content = content

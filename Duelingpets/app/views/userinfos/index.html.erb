@@ -1,11 +1,11 @@
 <% provide(:h1, "Userinfo List") %>
-<% if @userinfos.count > 10 %>
+<% if @userinfos.count >= 10 %>
    <div class="formlinks"><%= paginate @userinfos %></div>
    <br>
 <% end %>
 <% @userinfos.each do |userinfo| %>
    <div class="pageformat">
-      <p><%= button_to 'Edit Userinfo', edit_userinfo_path(userinfo), method: :get %></p>
+      <p><%= button_to 'Edit', edit_userinfo_path(userinfo), method: :get, class: "button editbutton" %></p>
       <p>Audio Browser: <%= userinfo.audiobrowser %></p>
       <p>Video Browser: <%= userinfo.videobrowser %></p>
       <p>MP3 file: <%= userinfo.mp3 %></p>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_06_040905) do
+ActiveRecord::Schema.define(version: 2020_01_26_050042) do
 
   create_table "accounttypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -147,6 +147,55 @@ ActiveRecord::Schema.define(version: 2019_11_06_040905) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "creatures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "image"
+    t.string "ogg"
+    t.string "mp3"
+    t.string "voiceogg"
+    t.string "voicemp3"
+    t.integer "level"
+    t.integer "hp"
+    t.integer "atk"
+    t.integer "def"
+    t.integer "agility"
+    t.integer "strength"
+    t.integer "mp"
+    t.integer "matk"
+    t.integer "mdef"
+    t.integer "magi"
+    t.integer "mstr"
+    t.integer "hunger"
+    t.integer "thirst"
+    t.integer "fun"
+    t.integer "lives"
+    t.integer "rarity"
+    t.boolean "unlimitedlives", default: false
+    t.boolean "retiredpet", default: false
+    t.boolean "starter", default: false
+    t.integer "petworth"
+    t.integer "cost"
+    t.datetime "created_on"
+    t.datetime "updated_on"
+    t.datetime "reviewed_on"
+    t.integer "user_id"
+    t.integer "creaturetype_id"
+    t.boolean "pointsreceived", default: false
+    t.boolean "reviewed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "creaturetypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_on"
+    t.integer "basecost"
+    t.integer "dreyterriumcost"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "difficulties", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.integer "pointdebt", default: 0
@@ -232,21 +281,30 @@ ActiveRecord::Schema.define(version: 2019_11_06_040905) do
     t.integer "hp"
     t.integer "atk"
     t.integer "def"
-    t.integer "spd"
-    t.integer "fun"
+    t.integer "agility"
+    t.integer "strength"
+    t.integer "mp"
+    t.integer "matk"
+    t.integer "mdef"
+    t.integer "magi"
+    t.integer "mstr"
     t.integer "hunger"
-    t.integer "knowledge"
+    t.integer "thirst"
+    t.integer "fun"
     t.integer "durability"
     t.integer "rarity"
-    t.boolean "starter"
-    t.boolean "equipable"
+    t.boolean "retireditem", default: false
+    t.boolean "starter", default: false
+    t.boolean "equipable", default: false
+    t.integer "itemworth"
     t.integer "cost"
     t.datetime "created_on"
     t.datetime "reviewed_on"
     t.datetime "updated_on"
     t.integer "user_id"
     t.integer "itemtype_id"
-    t.boolean "reviewed"
+    t.boolean "pointsreceived", default: false
+    t.boolean "reviewed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -257,6 +315,32 @@ ActiveRecord::Schema.define(version: 2019_11_06_040905) do
     t.integer "basecost"
     t.integer "dreyterriumcost"
     t.boolean "demoitem", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "jukeboxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "ogg"
+    t.string "mp3"
+    t.datetime "created_on"
+    t.datetime "updated_on"
+    t.integer "user_id"
+    t.integer "bookgroup_id"
+    t.boolean "music_on", default: false
+    t.boolean "privatejukebox", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mainsheets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.datetime "created_on"
+    t.datetime "updated_on"
+    t.integer "user_id"
+    t.integer "jukebox_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -300,6 +384,47 @@ ActiveRecord::Schema.define(version: 2019_11_06_040905) do
     t.boolean "pointsreceived", default: false
     t.integer "user_id"
     t.integer "bookgroup_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pmboxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "capacity"
+    t.boolean "box_open", default: false
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pmreplies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "message"
+    t.string "image"
+    t.string "ogg"
+    t.string "mp3"
+    t.string "ogv"
+    t.string "mp4"
+    t.datetime "created_on"
+    t.datetime "updated_on"
+    t.integer "user_id"
+    t.integer "pm_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title"
+    t.text "message"
+    t.string "image"
+    t.string "ogg"
+    t.string "mp3"
+    t.string "ogv"
+    t.string "mp4"
+    t.datetime "created_on"
+    t.datetime "updated_on"
+    t.boolean "user1_unread", default: false
+    t.boolean "user2_unread", default: false
+    t.integer "user_id"
+    t.integer "pmbox_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -358,10 +483,42 @@ ActiveRecord::Schema.define(version: 2019_11_06_040905) do
   create_table "shouts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "message"
     t.datetime "created_on"
+    t.datetime "updated_on"
     t.datetime "reviewed_on"
     t.integer "user_id"
     t.integer "shoutbox_id"
     t.boolean "reviewed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sounds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "ogg"
+    t.string "mp3"
+    t.datetime "created_on"
+    t.datetime "updated_on"
+    t.datetime "reviewed_on"
+    t.integer "user_id"
+    t.integer "bookgroup_id"
+    t.integer "subsheet_id"
+    t.boolean "reviewed", default: false
+    t.boolean "pointsreceived", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "subsheets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.boolean "collab_mode", default: false
+    t.boolean "fave_folder", default: false
+    t.boolean "privatesubsheet", default: false
+    t.datetime "created_on"
+    t.datetime "updated_on"
+    t.integer "user_id"
+    t.integer "mainsheet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

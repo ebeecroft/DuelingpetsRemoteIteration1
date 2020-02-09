@@ -166,29 +166,29 @@
     <%= form.text_field :remote_creationmp3_url %>
     <%= form.hidden_field :creationmp3_cache %>
   </div>
-  <p class="pageformat">Crazybat Ogv files</p>
+  <p class="pageformat">Missingpage Ogg files</p>
   <div class="pageformat">
-     <%= video_tag(@webcontrol.crazybatogv_url(:thumb).to_s, size: "200x200", :controls => true) if @webcontrol.crazybatogv? %>
+     <%= audio_tag(@webcontrol.missingpageogg_url.to_s, :controls => true) if @webcontrol.missingpageogg? %>
   </div>
   <div class="pageformat">
-     <%= form.file_field :crazybatogv %>
+     <%= form.file_field :missingpageogg %>
   </div>
   <div class="pageformat">
-    <%= form.label :remote_crazybatogv_url, "or Crazybat Ogv URL" %><br />
-    <%= form.text_field :remote_crazybatogv_url %>
-    <%= form.hidden_field :crazybatogv_cache %>
+    <%= form.label :remote_missingpageogg_url, "or Missingpage Ogg URL" %><br />
+    <%= form.text_field :remote_missingpageogg_url %>
+    <%= form.hidden_field :missingpageogg_cache %>
   </div>
-  <p class="pageformat">Crazybat MP4 files</p>
+  <p class="pageformat">Missingpage MP3 files</p>
   <div class="pageformat">
-     <%= video_tag(@webcontrol.crazybatmp4_url(:thumb).to_s, size: "200x200", :controls => true) if @webcontrol.crazybatmp4? %>
-  </div>
-  <div class="pageformat">
-     <%= form.file_field :crazybatmp4 %>
+     <%= audio_tag(@webcontrol.missingpagemp3_url.to_s, :controls => true) if @webcontrol.missingpagemp3? %>
   </div>
   <div class="pageformat">
-    <%= form.label :remote_crazybatmp4_url, "or Crazybat Mp4 URL" %><br />
-    <%= form.text_field :remote_crazybatmp4_url %>
-    <%= form.hidden_field :crazybatmp4_cache %>
+     <%= form.file_field :missingpagemp3 %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :remote_missingpagemp3_url, "or Missingpage Mp3 URL" %><br />
+    <%= form.text_field :remote_missingpagemp3_url %>
+    <%= form.hidden_field :missingpagemp3_cache %>
   </div>
   <p class="pageformat">Maintenance Ogg files</p>
   <div class="pageformat">
@@ -215,7 +215,7 @@
     <%= form.hidden_field :maintenancemp3_cache %>
   </div>
   <div class="pageformat">
-    <%= form.submit %>
+    <%= form.submit class: "button submitbutton" %>
   </div>
   <br>
   <p class="formlinks"><%= link_to 'Back', webcontrols_path %></p>

@@ -244,7 +244,7 @@ module BlogsHelper
                allMode = Maintenancemode.find_by_id(1)
                blogMode = Maintenancemode.find_by_id(6)
                if(allMode.maintenance_on || blogMode.maintenance_on)
-                  if(current_user && current_user.admin)
+                  if(current_user && current_user.pouch.privilege == "Admin")
                      indexCommons
                   else
                      if(allMode.maintenance_on)

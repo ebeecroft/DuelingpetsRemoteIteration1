@@ -4,6 +4,10 @@
    Your new oc <%= @content.name %> was approved!
 <% elsif @type == "Item" %>
    Your new item <%= @content.name %> was approved!
+<% elsif @type == "Creature" %>
+   Your new creature <%= @content.name %> was approved!
+<% elsif @type == "Sound" %>
+   Your new sound <%= @content.title %> was approved!
 <% end %>
 ===============================================
 
@@ -29,6 +33,14 @@ that it fits into the correct book group. The
    item itself has a lot of interesting looking stats,
    it feels like it is pretty balanced. The image of
    the item itself looks really good.
+<% elsif @type == "Creature" %>
+   creature has a lot of interesting looking stats,
+   it feels like it is pretty balanced. The image of
+   the item itself looks really good. The music and
+   creature voice appear to be really good.
+<% elsif @type == "Sound" %>
+   sound you created is really nice. The other users
+   will like it a lot too.
 <% end %>
 In recognition of your effort we have decided
 to add these <%= @points %> points to your account.

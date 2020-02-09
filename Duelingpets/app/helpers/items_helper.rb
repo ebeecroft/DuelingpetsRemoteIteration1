@@ -1,6 +1,35 @@
 module ItemsHelper
 
    private
+      def validateItemStats(cost)
+         #Determines the error message
+         if(cost == -1)
+            message = "Strength can't be negative!"
+         elsif(cost == -2)
+            message = "Mstr can't be negative!"
+         elsif(cost == -3)
+            message = "Durability can't be 0!"
+         elsif(cost == -4)
+            message = "Rarity can't be 0!"
+         elsif(cost == -5)
+            message = "Item values can't be empty!"
+         end
+         flash[:error] = message
+      end
+
+      def getPetCalc(item)
+         if(!item.hp.nil? && !item.atk.nil? && !item.def.nil? && !item.agility.nil? && !item.strength.nil? && !item.mp.nil? && !item.matk.nil? && !item.mdef.nil? && !item.magi.nil? && !item.mstr.nil? && !item.hunger.nil? && !item.thirst.nil? && !item.fun.nil? && !item.durability.nil? && !item.rarity.nil? && !item.itemworth.nil? && !item.itemtype.basecost.nil?)
+            #Application that calculates cost
+            results = `public/Resources/Code/itemcalc/calc #{item.hp} #{item.atk} #{item.def} #{item.agility} #{item.strength} #{item.mp} #{item.matk} #{item.mdef} #{item.magi} #{item.mstr} #{item.hunger} #{item.thirst} #{item.fun} #{item.durability} #{item.rarity} #{item.itemworth} #{item.itemtype.basecost}`
+            itemAttributes = results
+            itemCost = itemAttributes
+            @item = item
+            @item.cost = itemCost
+         else
+            @item.cost = -5
+         end
+      end
+
       def getItemParams(type)
          value = ""
          if(type == "Id")
@@ -10,9 +39,9 @@ module ItemsHelper
          elsif(type == "User")
             value = params[:user_id]
          elsif(type == "Item")
-            value = params.require(:item).permit(:name, :description, :hp, :atk, :def, :spd, :fun, :hunger,
-            :knowledge, :durability, :rarity, :starter, :equipable, :cost, :itemtype_id, :itemart,
-            :remote_itemart_url, :itemart_cache)
+            value = params.require(:item).permit(:name, :description, :hp, :atk, :def, :agility, :strength,
+            :mp, :matk, :mdef, :magi, :mstr, :hunger, :thirst, :fun, :rarity, :starter, :itemworth, :itemart, :remote_itemart_url,
+            :itemart_cache, :itemtype_id, :equipable, :durability)
          elsif(type == "Page")
             value = params[:page]
          else
@@ -35,7 +64,7 @@ module ItemsHelper
             allItems = Item.order("reviewed_on desc, created_on desc")
             itemsReviewed = allItems.select{|item| (current_user && item.user_id == current_user.id) || item.reviewed}
          end
-         @ocs = Kaminari.paginate_array(itemsReviewed).page(getItemParams("Page")).per(10)
+         @items = Kaminari.paginate_array(itemsReviewed).page(getItemParams("Page")).per(10)
       end
 
       def optional
@@ -72,7 +101,7 @@ module ItemsHelper
       end
 
       def showCommons(type)
-         itemFound = Item.find_by_id(getItemParams("Id"))
+         itemFound = Item.find_by_name(getItemParams("Id"))
          if(itemFound)
             removeTransactions
             if(itemFound.reviewed || current_user && ((itemFound.user_id == current_user.id) || current_user.pouch.privilege == "Admin"))
@@ -138,7 +167,7 @@ module ItemsHelper
                   userFound = User.find_by_vname(getItemParams("User"))
                   if(logged_in && userFound)
                      if(logged_in.id == userFound.id)
-                        newOc = logged_in.items.new
+                        newItem = logged_in.items.new
                         if(type == "create")
                            newItem = logged_in.items.new(getItemParams("Item"))
                            newItem.created_on = currentTime
@@ -152,15 +181,18 @@ module ItemsHelper
                         @user = userFound
 
                         if(type == "create")
-                           if(@item.save)
-                              url = "http://www.duelingpets.net/items/review" #"http://localhost:3000/blogs/review"
-                              #if(type == "Production")
-                              #   url = "http://www.duelingpets.net/blogs/review"
-                              #end
-                              ContentMailer.content_review(@item, "Item", url).deliver_now
-                              flash[:success] = "#{@item.name} was successfully created."
-                              redirect_to user_item_path(@user, @item)
+                           getPetCalc(@item)
+                           if(@item.cost >= 0)
+                              if(@item.save)
+                                 url = "http://www.duelingpets.net/items/review"
+                                 ContentMailer.content_review(@item, "Item", url).deliver_now
+                                 flash[:success] = "#{@item.name} was successfully created."
+                                 redirect_to user_item_path(@user, @item)
+                              else
+                                 render "new"
+                              end
                            else
+                              validateItemStats(@item.cost)
                               render "new"
                            end
                         end

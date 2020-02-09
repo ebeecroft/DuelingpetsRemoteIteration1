@@ -5,7 +5,7 @@
 <% end %>
 <% @registrations.each do |registration| %>
    <div class="pageformat">
-      <p><%= button_to 'Approve', registrations_review1_path(:id => registration.id), method: :post %><%= button_to 'Deny', registrations_review2_path(:id => registration.id), method: :post %></p>
+      <div class="container"><%= button_to 'Approve', registrations_review1_path(:id=>registration.id), method: :post, class: "button editbutton" %></div> <div class="container"><%= button_to 'Deny', registrations_review2_path(:id=>registration.id), method: :post, class: "button destroybutton" %></div>
       <p>Name: <%= registration.firstname %> <%= registration.lastname %></p>
       <p>Birthday: <%= registration.birthday.strftime("%B-%d-%Y") %></p>
       <p>Country: <%= registration.country %></p>

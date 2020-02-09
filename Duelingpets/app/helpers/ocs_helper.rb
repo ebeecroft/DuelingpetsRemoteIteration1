@@ -12,7 +12,7 @@ module OcsHelper
          elsif(type == "Oc")
             value = params.require(:oc).permit(:name, :description, :nickname, :species, :age, :personality, :likesanddislikes, :backgroundandhistory, :relatives, :family, :friends, :world, :alignment, :alliance, :elements, :appearance, :clothing, :accessories, :image, :remote_image_url, :image_cache, :ogg, :remote_ogg_url, :ogg_cache,
             :mp3, :remote_mp3_url, :mp3_cache, :voiceogg, :remote_voiceogg_url, :voiceogg_cache, :voicemp3, :remote_voicemp3_url, :voicemp3_cache,
-            :created_on, :updated_on, :reviewed_on, :reviewed, :user_id, :bookgroup_id)
+            :bookgroup_id)
          elsif(type == "Page")
             value = params[:page]
          else
@@ -111,15 +111,15 @@ module OcsHelper
             if(type == "index") #Guests
                removeTransactions
                allMode = Maintenancemode.find_by_id(1)
-               blogMode = Maintenancemode.find_by_id(6)
-               if(allMode.maintenance_on || blogMode.maintenance_on)
-                  if(current_user && current_user.admin)
+               ocMode = Maintenancemode.find_by_id(6)
+               if(allMode.maintenance_on || ocMode.maintenance_on)
+                  if(current_user && current_user.pouch.privilege == "Admin")
                      indexCommons
                   else
                      if(allMode.maintenance_on)
                         render "/start/maintenance"
                      else
-                        render "/blogs/maintenance"
+                        render "/ocs/maintenance"
                      end
                   end
                else
@@ -127,12 +127,12 @@ module OcsHelper
                end
             elsif(type == "new" || type == "create")
                allMode = Maintenancemode.find_by_id(1)
-               blogMode = Maintenancemode.find_by_id(6)
-               if(allMode.maintenance_on || blogMode.maintenance_on)
+               ocMode = Maintenancemode.find_by_id(6)
+               if(allMode.maintenance_on || ocMode.maintenance_on)
                   if(allMode.maintenance_on)
                      render "/start/maintenance"
                   else
-                     render "/blogs/maintenance"
+                     render "/ocs/maintenance"
                   end
                else
                   logged_in = current_user
@@ -178,12 +178,12 @@ module OcsHelper
                   editCommons(type)
                else
                   allMode = Maintenancemode.find_by_id(1)
-                  blogMode = Maintenancemode.find_by_id(6)
-                  if(allMode.maintenance_on || blogMode.maintenance_on)
+                  ocMode = Maintenancemode.find_by_id(6)
+                  if(allMode.maintenance_on || ocMode.maintenance_on)
                      if(allMode.maintenance_on)
                         render "/start/maintenance"
                      else
-                        render "/blogs/maintenance"
+                        render "/ocs/maintenance"
                      end
                   else
                      editCommons(type)
@@ -192,14 +192,14 @@ module OcsHelper
             elsif(type == "show" || type == "destroy")
                allMode = Maintenancemode.find_by_id(1)
                blogMode = Maintenancemode.find_by_id(6)
-               if(allMode.maintenance_on || blogMode.maintenance_on)
+               if(allMode.maintenance_on || ocMode.maintenance_on)
                   if(current_user && current_user.pouch.privilege == "Admin")
                      showCommons(type)
                   else
                      if(allMode.maintenance_on)
                         render "/start/maintenance"
                      else
-                        render "/blogs/maintenance"
+                        render "/ocs/maintenance"
                      end
                   end
                else

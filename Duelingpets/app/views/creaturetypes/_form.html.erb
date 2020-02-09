@@ -1,0 +1,30 @@
+<%= form_with(model: @creaturetype, local: true) do |form| %>
+  <% if @creaturetype.errors.any? %>
+    <div id="errorexplan">
+      <h2 id="errorheader"><%= pluralize(@creaturetype.errors.count, "error") %> prohibited this creaturetype from being saved:</h2>
+
+      <ul>
+      <% @creaturetype.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="pageformat">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :basecost %>
+    <%= form.number_field :basecost %>
+  </div>
+  <div class="pageformat">
+    <%= form.label :dreyterriumcost %>
+    <%= form.number_field :dreyterriumcost %>
+  </div>
+  <div class="pageformat">
+    <%= form.submit class: "button submitbutton" %>
+  </div>
+  <br>
+  <p class="formlinks"><%= link_to 'Back', root_path %></p>
+<% end %>

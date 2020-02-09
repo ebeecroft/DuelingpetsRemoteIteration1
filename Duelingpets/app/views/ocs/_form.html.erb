@@ -155,7 +155,7 @@
     <%= form.collection_select(:bookgroup_id, @group, :id, :name) %>
   </div>
   <div class="pageformat">
-    <%= form.submit %>
+    <%= form.submit class: "button submitbutton" %>
   </div>
   <br>
   <p class="formlinks"><%= link_to 'Back', user_path(@oc.user) %></p>

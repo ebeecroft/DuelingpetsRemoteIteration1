@@ -51,6 +51,10 @@ module CusersHelper
                elsif(type == "Hoard")
                   dragonhoard = Dragonhoard.find_by_id(1)
                   sound = (audio_tag(getMusicOrVideo("Sound", dragonhoard), :loop => true, :autoplay => true))
+               elsif(type == "Jukebox")
+                  if(user.music_on)
+                     sound = (audio_tag(getMusicOrVideo("Sound", user), :loop => true, :autoplay => true))
+                  end
                elsif(type == "User")
                   if(user.userinfo.music_on)
                      sound = (audio_tag(getMusicOrVideo("User", user), :loop => true, :autoplay => true))
@@ -80,6 +84,10 @@ module CusersHelper
                elsif(type == "Hoard")
                   dragonhoard = Dragonhoard.find_by_id(1)
                   sound = (audio_tag(getMusicOrVideo("Sound", dragonhoard), :loop => true, :autoplay => true))
+               elsif(type == "Jukebox")
+                  if(user.music_on)
+                     sound = (audio_tag(getMusicOrVideo("Sound", user), :loop => true, :autoplay => true))
+                  end
                elsif(type == "User")
                   if(user.userinfo.music_on)
                      sound = (audio_tag(getMusicOrVideo("User", user), :loop => true, :autoplay => true))
@@ -105,7 +113,7 @@ module CusersHelper
                raise "Invalid browser setting detected! Please choose mp3 or ogg"
             end
          end
-         #return sound
+         return sound
       end
 
       def getUserPrivilege(user)
@@ -183,10 +191,12 @@ module CusersHelper
             allContents = Oc.order("created_on desc")
          elsif(type == "Item")
             allContents = Item.order("created_on desc")
+         elsif(type == "Creature")
+            allContents = Creature.order("created_on desc")
          else
             raise "Invalid content type detected!"
          end
-         if(type != "Item")
+         if(type != "Item" && type != "Creature")
             reviewedContents = allContents.select{|content| content.reviewed && checkBookgroupStatus(content)}
          else
             reviewedContents = allContents.select{|content| content.reviewed}
@@ -219,22 +229,46 @@ module CusersHelper
             if(oggbrowser)
                music = ""
                if(type == "User")
-                  music = content.userinfo.ogg_url
+                  if(content.userinfo.ogg.to_s != "")
+                     music = content.userinfo.ogg_url
+                  else
+                     music = content.userinfo.mp3_url
+                  end
                elsif(type == "Movie")
-                  music = content.ogv_url
+                  if(content.ogv.to_s != "")
+                     music = content.ogv_url
+                  else
+                     music = content.mp4_url
+                  end
                elsif(type == "Sound")
-                  music = content.ogg_url
+                  if(content.ogg.to_s != "")
+                     music = content.ogg_url
+                  else
+                     music = content.mp3_url
+                  end
                elsif((type != "User" && type != "Movie") && (type != "Sound"))
                   music = content
                end
             elsif(mp3browser)
                music = ""
                if(type == "User")
-                  music = content.userinfo.mp3_url
+                  if(content.mp3.to_s != "")
+                     music = content.userinfo.mp3_url
+                  else
+                     music = content.userinfo.ogg_url
+                  end
                elsif(type == "Movie")
-                  music = content.mp4_url
+                  if(content.mp4.to_s != "")
+                     music = content.mp4_url
+                  else
+                     music = content.ogv_url
+                  end
                elsif(type == "Sound")
-                  music = content.mp3_url
+                  if(content.mp3.to_s != "")
+                     music = content.mp3_url
+                  else
+                     music = content.ogg_url
+                  end
                elsif((type != "User" && type != "Movie") && (type != "Sound"))
                   music = content
                end

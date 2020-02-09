@@ -31,63 +31,8 @@
     <%= form.number_field :emeraldfines %>
   </div>
   <div class="pageformat">
-    <%= form.submit %>
+    <%= form.submit class: "button submitbutton" %>
   </div>
   <br>
   <p class="formlinks"><%= link_to 'Back', suspendedtimelimits_path %></p>
-<% end %>
-
-
-
-<%= form_with(model: suspendedtimelimit, local: true) do |form| %>
-  <% if suspendedtimelimit.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(suspendedtimelimit.errors.count, "error") %> prohibited this suspendedtimelimit from being saved:</h2>
-
-      <ul>
-      <% suspendedtimelimit.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :pointfines %>
-    <%= form.number_field :pointfines %>
-  </div>
-
-  <div class="field">
-    <%= form.label :emeraldfines %>
-    <%= form.number_field :emeraldfines %>
-  </div>
-
-  <div class="field">
-    <%= form.label :timelimit %>
-    <%= form.datetime_select :timelimit %>
-  </div>
-
-  <div class="field">
-    <%= form.label :reason %>
-    <%= form.text_area :reason %>
-  </div>
-
-  <div class="field">
-    <%= form.label :created_on %>
-    <%= form.datetime_select :created_on %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.number_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :from_user_id %>
-    <%= form.number_field :from_user_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>

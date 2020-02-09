@@ -6,7 +6,7 @@
 <% @pouches.each do |pouch| %>
    <!---Add a possible avatar up here--->
    <div class="pageformat">
-      <div class="container"><div class="formlinks">User: <%= link_to pouch.user.vname, user_path(pouch.user) %></div></div> <div class="container"><%= button_to 'Edit', edit_pouch_path(pouch), method: :get %></div>
+      <div class="container"><p class="formlinks">User: <%= link_to pouch.user.vname, user_path(pouch.user) %></p></div> <div class="container"><%= button_to 'Edit', edit_pouch_path(pouch), method: :get, class: "button editbutton" %></div>
       <p>Privilege: <%= pouch.privilege %></p>
       <p>Status: <%= getActivity(pouch.user) %></p>
       <p>Amount: <%= pouch.amount %>/<%= getUpgradeLimit(pouch, "Pouch") %></p>

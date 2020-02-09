@@ -21,6 +21,55 @@
       on building some new features. So some of these new ones
       might be a bit buggy.
    </p>
+   <% if newestContent("Sound").count > 0 %>
+      <br>
+      <p>Newest Sounds</p>
+      <% newestContent("Sound").each_with_index do |content, index| %>
+         <div class="container">
+            <p class="formlinks"><%= link_to content.title, subsheet_sound_path(content.subsheet, content) %></p>
+            <% if content.ogg.to_s != "" || content.mp3.to_s != "" %>
+               <p><%= audio_tag(getMusicOrVideo("Sound", content), :controls => true) %></p>
+            <% end %>
+            <p>Created: <%= distance_of_time_in_words_to_now content.created_on %> ago on (<%= content.created_on.strftime("%B-%d-%Y") %>)</p>
+            <% if !content.reviewed_on.nil? %>
+               <p>Reviewed: <%= distance_of_time_in_words_to_now content.reviewed_on %> ago on (<%= content.reviewed_on.strftime("%B-%d-%Y") %>)</p>
+            <% end %>
+            <p>Updated: <%= distance_of_time_in_words_to_now content.updated_on %> ago on (<%= content.updated_on.strftime("%B-%d-%Y") %>)</p>
+            <p class="formlinks">Composer: <%= getUserPrivilege(content.user) %><%= link_to content.user.vname, user_path(content.user) %></p>
+            <p>Status: <%= getActivity(content.user) %>
+               <% if getActivity(content.user) != "Online" && getActivity(content.user) != "Inoperable" %>
+                  for <%= distance_of_time_in_words_to_now getTime(content.user) %>
+               <% end %>
+            </p>
+         </div>
+      <% end %>
+      <br>
+   <% end %>
+   <% if newestContent("Creature").count > 0 %>
+      <br>
+      <p>Newest Creatures</p>
+      <% newestContent("Creature").each_with_index do |content, index| %>
+         <div class="container">
+            <p class="formlinks"><%= link_to content.name, user_creature_path(content.user, content) %></p>
+            <% if content.image.to_s != "" %>
+               <p><%= image_tag(content.image_url(:thumb)) %></p>
+            <% end %>
+            <p>Created: <%= distance_of_time_in_words_to_now content.created_on %> ago on (<%= content.created_on.strftime("%B-%d-%Y") %>)</p>
+            <% if !content.reviewed_on.nil? %>
+               <p>Reviewed: <%= distance_of_time_in_words_to_now content.reviewed_on %> ago on (<%= content.reviewed_on.strftime("%B-%d-%Y") %>)</p>
+            <% end %>
+            <p>Updated: <%= distance_of_time_in_words_to_now content.updated_on %> ago on (<%= content.updated_on.strftime("%B-%d-%Y") %>)</p>
+            <p class="formlinks">Artist: <%= getUserPrivilege(content.user) %><%= link_to content.user.vname, user_path(content.user) %></p>
+            <p>Creaturetype: <%= content.creaturetype.name %></p>
+            <p>Status: <%= getActivity(content.user) %>
+               <% if getActivity(content.user) != "Online" && getActivity(content.user) != "Inoperable" %>
+                  for <%= distance_of_time_in_words_to_now getTime(content.user) %>
+               <% end %>
+            </p>
+         </div>
+      <% end %>
+      <br>
+   <% end %>
    <% if newestContent("Item").count > 0 %>
       <br>
       <p>Newest Items</p>
@@ -71,11 +120,4 @@
       <% end %>
       <br>
    <% end %>
-   <br>
-   <p>Audio Test</p>
-   <!--By default we are starting in the public folder--->
-   <!--We need to append front slash before resources to make it work-->
-   <p><%= audio_tag("/Resources/Music/homepage/Theme.mp3", :controls => true) %></p>
-   <%#= audio_tag("/Resources/Music/homepage/Theme.mp3", :controls => true, :loop => true, :autoplay => true) %>
-   <p><%#= video_tag("/Resources/Video/tmnt/Alien-Invaders.mp4", :controls => true) %></p>
 </div>

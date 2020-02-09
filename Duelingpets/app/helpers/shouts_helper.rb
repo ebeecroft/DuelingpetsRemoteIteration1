@@ -19,6 +19,31 @@ module ShoutsHelper
          return value
       end
 
+      def editCommons(type)
+         shoutFound = Shout.find_by_id(getShoutParams("Id"))
+         if(shoutFound)
+            logged_in = current_user
+            if(logged_in && ((logged_in.id == shoutFound.user_id) || logged_in.pouch.privilege == "Admin"))
+               shoutFound.updated_on = currentTime
+               shoutFound.reviewed = false
+               @shoutbox = Shoutbox.find_by_id(shoutFound.shoutbox)
+               @shout = shoutFound
+               if(type == "update")
+                  if(@shout.update_attributes(getShoutParams("Shout")))
+                     flash[:success] = "Shout was successfully updated."
+                     redirect_to user_path(@shout.shoutbox.user)
+                  else
+                     render "edit"
+                  end
+               end
+            else
+               redirect_to root_path
+            end
+         else
+            render "webcontrols/crazybat"
+         end
+      end
+
       def destroyCommons(logged_in)
          shoutFound = Shout.find_by_id(params[:id])
          if(shoutFound && logged_in)
@@ -75,6 +100,22 @@ module ShoutsHelper
                      redirect_to user_path(boxFound.user)
                   else
                      redirect_to root_path
+                  end
+               end
+            elsif(type == "edit" || type == "update")
+               if(current_user && current_user.pouch.privilege == "Admin")
+                  editCommons(type)
+               else
+                  allMode = Maintenancemode.find_by_id(1)
+                  userMode = Maintenancemode.find_by_id(6)
+                  if(allMode.maintenance_on || userMode.maintenance_on)
+                     if(allMode.maintenance_on)
+                        render "/start/maintenance"
+                     else
+                        render "/users/maintenance"
+                     end
+                  else
+                     editCommons(type)
                   end
                end
             elsif(type == "destroy")

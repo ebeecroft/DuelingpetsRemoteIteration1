@@ -1,10 +1,46 @@
 module StartHelper
 
    private
+      def getReviewContent(type)
+         value = 0
+         if(type == "Creature")
+            allCreatures = Creature.all
+            toReview = allCreatures.select{|content| !content.reviewed}
+            value = toReview.count
+         elsif(type == "Item")
+            allItems = Item.all
+            toReview = allItems.select{|content| !content.reviewed}
+            value = toReview.count
+         elsif(type == "OC")
+            allOCs = Oc.all
+            toReview = allOCs.select{|content| !content.reviewed}
+            value = toReview.count
+         elsif(type == "Blog")
+            allBlogs = Blog.all
+            toReview = allBlogs.select{|content| !content.reviewed}
+            value = toReview.count
+         elsif(type == "Art")
+            #toReview = allCreatures.select{|content| !content.reviewed}
+         elsif(type == "Sound")
+            allSounds = Sound.all
+            toReview = allSounds.select{|content| !content.reviewed}
+            value = toReview.count
+         elsif(type == "Movie")
+            #toReview = allCreatures.select{|content| !content.reviewed}
+         elsif(type == "Shout")
+            allShouts = Shout.all
+            toReview = allShouts.select{|content| !content.reviewed}
+            value = toReview.count
+         end
+         return value
+      end
+
       def getTimeDifference(type, content)
          value = ""
          if(type == "User")
             value = (currentTime - content.joined_on)
+         elsif(type == "Register")
+            value = (currentTime - content.registered_on)
          elsif(type != "User")
             value = (currentTime - content.created_on)
          end
@@ -29,6 +65,21 @@ module StartHelper
             allContents = Item.all
             if(allContents.count != 0)
                firstContent = Item.first.created_on.year
+            end
+         elsif(type == "Creature")
+            allContents = Creature.all
+            if(allContents.count != 0)
+               firstContent = Creature.first.created_on.year
+            end
+         elsif(type == "PM")
+            allContents = Pm.all
+            if(allContents.count != 0)
+               firstContent = Pm.first.created_on.year
+            end
+         elsif(type == "PMreply")
+            allContents = Pmreply.all
+            if(allContents.count != 0)
+               firstContent = Pmreply.first.created_on.year
             end
          elsif(type == "Register")
             allContents = Registration.all
@@ -260,7 +311,9 @@ module StartHelper
          total = 0
          if(firstContent.to_s != "")
             #Determine if the contents is not bot related
-            if(type != "User")
+            if(type == "Register")
+               nonBot = allContents
+            elsif(type != "User")
                nonBot = allContents.select{|content| ((content.user.pouch.privilege != "Bot") && (content.user.pouch.privilege != "Trial")) && ((content.user.pouch.privilege != "Admin") && (content.user.pouch.privilege != "Glitchy"))}
             else
                nonBot = allContents.select{|content| ((content.pouch.privilege != "Bot") && (content.pouch.privilege != "Trial")) && ((content.pouch.privilege != "Admin") && (content.pouch.privilege != "Glitchy"))}
@@ -327,6 +380,8 @@ module StartHelper
             #allVisits = Ocvisit.all
          elsif(type == "Item")
             #allVisits = Itemvisit.all
+         elsif(type == "Creature")
+            #allVisits = Creaturevisit.all
          end
 
          total = 0
@@ -463,7 +518,7 @@ module StartHelper
          betaMode = Maintenancemode.find_by_id(3)
          grandMode = Maintenancemode.find_by_id(4)
          if(criticalMode.maintenance_on)
-            value = "[Engine Overheating!!!!!]"
+            value = "[Chipmunks have ran off with the ram]"
          elsif(betaMode.maintenance_on)
             value = "[Beta]"
          elsif(grandMode.maintenance_on)
@@ -566,6 +621,20 @@ module StartHelper
                   end
                   redirect_to root_path
                end
+            elsif(type == "activeusers")
+               allMode = Maintenancemode.find_by_id(1)
+               if(allMode.maintenance_on)
+                  render "/start/maintenance"
+               else
+                  if(current_user)
+                     #Retrieving the active users
+                     allUsers = Pouch.order("signed_in_at desc")
+                     activeUsers = allUsers.select{|pouch| (pouch.activated && !pouch.signed_out_at) && (pouch.last_visited && (currentTime - pouch.last_visited) < 30.minutes)}
+                     @pouches = Kaminari.paginate_array(activeUsers).page(params[:page]).per(50)
+                  else
+                     redirect_to root_path
+                  end
+               end
             elsif(type == "muteAudio")
                if(current_user)
                   if(current_user.userinfo.mute_on)
@@ -586,8 +655,24 @@ module StartHelper
                   redirect_to crazybat_path
                elsif(params[:pageType] == "CreativeOC")
                   redirect_to new_user_oc_path(current_user)
+               elsif(params[:pageType] == "Creature")
+                  redirect_to new_user_creature_path(current_user)
+               elsif(params[:pageType] == "Item")
+                  redirect_to new_user_item_path(current_user)
                elsif(params[:pageType] == "Usermain")
-                  redirect_to root_path
+                  redirect_to user_path(current_user)
+               elsif(params[:pageType] == "Colormain")
+                  redirect_to colorschemes_maintenance_path
+               elsif(params[:pageType] == "Blogmain")
+                  redirect_to blogs_path
+               elsif(params[:pageType] == "OCmain")
+                  redirect_to ocs_path
+               elsif(params[:pageType] == "Itemmain")
+                  redirect_to items_path
+               elsif(params[:pageType] == "Creaturemain")
+                  redirect_to creatures_path
+               elsif(params[:pageType] == "Jukebox")
+                  redirect_to user_jukeboxes_path(current_user)
                end
             elsif(type == "admincontrols" || type == "keymastercontrols" || type == "reviewercontrols" || type == "managercontrols")
             end

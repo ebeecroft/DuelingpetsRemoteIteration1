@@ -15,7 +15,6 @@ module ShoutboxesHelper
                else
                   redirect_to root_path
                end
-            elsif(type == "enablebox")
             end
          end
       end

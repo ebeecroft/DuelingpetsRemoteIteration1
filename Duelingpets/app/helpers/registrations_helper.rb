@@ -123,36 +123,17 @@ module RegistrationsHelper
          @pouch2.save
       end
 
-      def buildBox
-         #Builds the user's donationbox
-         newBox = Donationbox.new(params[:donationbox])
-         newBox.user_id = @user.id
-         newBox.initialized_on = currentTime
-         newBox.description = "Describe your donation"
-         @donationbox = newBox
-         @donationbox.save
-      end
-
-      def buildPouch
+      def buildPouch(user)
          #Builds the user's pouch
          starterPoints = 0
          newPouch = Pouch.new(params[:pouch])
-         newPouch.user_id = @user.id
+         newPouch.user_id = user.id
          newPouch.remember_token = SecureRandom.urlsafe_base64
          newPouch.amount = starterPoints
-
-         #Build shoutbox
-         newBox = Shoutbox.new(params[:shoutbox])
-         newBox.user_id = @user.id
-         newBox.capacity = 600
-         @shoutbox = newBox
-         @shoutbox.save
-
-         #Build inventory
-         newInventory = Inventory.new(params[:inventory])
-         newInventory.user_id = @user.id
-         @inventory = newInventory
-         @inventory.save
+         betaMode = Maintenancemode.find_by_id(3)
+         if(betaMode.maintenance_on)
+            newPouch.privilege = "Beta"
+         end
 
          #Remove some Dreyterrium to give to the user
          hoard = Dragonhoard.find_by_id(1)
@@ -169,18 +150,33 @@ module RegistrationsHelper
          @pouch.save
       end
 
-      def buildUserInfo(user)
-         #Builds the user attributes
-         newInfo = Userinfo.new(params[:userinfo])
-         newInfo.audiobrowser = "ogg"
-         newInfo.videobrowser = "ogv"
-         newInfo.user_id = user.id
-         newInfo.info = "Welcome #{user.vname} to Duelingpets!"
-         newInfo.daycolor_id = 1
-         newInfo.nightcolor_id = 2
-         newInfo.bookgroup_id = 1
-         @userinfo = newInfo
-         @userinfo.save
+      def buildUserParameters(user, type)
+         userstat = ""
+         if(type == "Info")
+            userstat = Userinfo.new(params[:userinfo])
+            userstat.audiobrowser = "ogg"
+            userstat.videobrowser = "ogv"
+            userstat.info = "Welcome #{user.vname} to Duelingpets!"
+            userstat.daycolor_id = 1
+            userstat.nightcolor_id = 2
+            userstat.bookgroup_id = 1
+         elsif(type == "Shoutbox" || type == "PMbox")
+            userstat = Shoutbox.new(params[:shoutbox])
+            userstat.capacity = 600
+            if(type == "PMbox")
+               userstat = Pmbox.new(params[:pmbox])
+               userstat.capacity = 8000
+            end
+         elsif(type == "Inventory")
+            userstat = Inventory.new(params[:inventory])
+         elsif(type == "Donationbox")
+            userstat = Donationbox.new(params[:donationbox])
+            userstat.initialized_on = currentTime
+            userstat.description = "Describe your donation"
+         end
+         userstat.user_id = user.id
+         @userstat = userstat
+         @userstat.save
       end
 
       def createUser(registrationFound)
@@ -196,7 +192,7 @@ module RegistrationsHelper
          newUser.country = registrationFound.country
          newUser.country_timezone = registrationFound.country_timezone
          newUser.birthday = registrationFound.birthday
-         initialPassword = SecureRandom.urlsafe_base64
+         initialPassword = "Peaches"
          newUser.password = initialPassword
          newUser.password_confirmation = initialPassword
          return newUser
@@ -285,10 +281,15 @@ module RegistrationsHelper
                            newUser = createUser(registrationFound)
                            @user = newUser
                            if(@user.save)
-                              buildUserInfo(@user)
-                              buildPouch
+                              #Builds the user parameters
+                              buildUserParameters(@user, "Info")
+                              buildUserParameters(@user, "Shoutbox")
+                              buildUserParameters(@user, "PMbox")
+                              buildUserParameters(@user, "Inventory")
+                              #buildUserParameters(@user, "Donationbox")
+                              buildPouch(@user)
+
                               UserMailer.login_info(@user, @user.password).deliver_later(wait: 2.minutes)
-                              #buildBox
                               welcomeUser
                               flash[:success] = "Registration was converted to a user."
                               @registration.destroy

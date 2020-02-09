@@ -5,7 +5,7 @@
 <% end %>
 <% @colorschemes.each do |colorscheme| %>
    <div class="pageformat">
-      <div class="container"><%= colorscheme.name %></div> <div class="container"><%= button_to 'Edit', edit_user_colorscheme_path(colorscheme.user, colorscheme), method: :get %></div> <div class="container"><%= button_to 'Destroy', [colorscheme.user, colorscheme], method: :delete, data: { confirm: 'Are you sure?' } %></div>
+      <div class="container"><p>Name: <%= colorscheme.name %></p></div> <div class="container"><%= button_to 'Edit', edit_user_colorscheme_path(colorscheme.user, colorscheme), method: :get, class: "button editbutton" %></div> <div class="container"><%= button_to 'Destroy', [colorscheme.user, colorscheme], method: :delete, class: "button destroybutton", data: { confirm: 'Are you sure?' } %></div>
       <p>Created on: <%= distance_of_time_in_words_to_now colorscheme.created_on %> ago on (<%= colorscheme.created_on.strftime("%B-%d-%Y") %>)</p>
       <br>
       <% if colorscheme.user.userinfo.miniavatar.to_s != "" %>

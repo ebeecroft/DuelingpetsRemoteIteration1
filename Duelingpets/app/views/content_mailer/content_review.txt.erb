@@ -4,6 +4,10 @@
    <%= @content.user.vname %>'s new oc <%= @content.name %> is awaiting your review!
 <% elsif @type == "Item" %>
    <%= @content.user.vname %>'s new item <%= @content.name %> is awaiting your review!
+<% elsif @type == "Creature" %>
+   <%= @content.user.vname %>'s new creature <%= @content.name %> is awaiting your review!
+<% elsif @type == "Sound" %>
+   <%= @content.user.vname %>'s new sound <%= @content.title %> is awaiting your review!
 <% end %>
 ===============================================
  
@@ -19,6 +23,14 @@
    Greetings my review team we have an artist by the name
    of <%= @content.user.vname %> who is building some new
    items for the site.
+<% elsif @type == "Creature" %>
+   Greetings my review team we have an artist by the name
+   of <%= @content.user.vname %> who is building some new
+   creatures for the site.
+<% elsif @type == "Sound" %>
+   Greetings my review team we have a composer by the name
+   of <%= @content.user.vname %> who is building some new
+   sounds for the site.
 <% end %>
 So I gathered you all together to have a look at his
 newest submission to see if it fits within our
@@ -37,6 +49,14 @@ guidlines.
    This item has a variety of different stats that might
    be included with the standard image. As such I like
    you to look this content over.
+<% elsif @type == "Creature" %>
+   This creature has a variety of different stats that might
+   be included with the standard image as well as some voice
+   and background music. As such I like you to look this
+   content over.
+<% elsif @type == "Sound" %>
+   This sound might be a song, a radio walkthrough, or
+   others. As such I like you to look this content over.
 <% end %>
 Be sure to check to see if this content does indeed fit
 the book group that it has been assigned to. Please give
@@ -61,6 +81,12 @@ to be abused for evil means.
 <% elsif @type == "Item" %>
    Now if you approve the item then the user gets points
    added to their account.
+<% elsif @type == "Creature" %>
+   Now if you approve the creature then the user gets
+   points added to their account.
+<% elsif @type == "Sound" %>
+   Now if you approve the sound then the user gets
+   points added to their account.
 <% end %>
 If you deny the content please get in touch with the
 user and let him know why and how to go about fixing it
